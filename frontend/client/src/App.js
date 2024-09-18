@@ -17,7 +17,7 @@ useEffect(() => {
 
   return (
     <div className="App">
-        <h1> Hello </h1>
+        <h1> Hello GraSPI!! </h1>
     </div>
   );
 }
