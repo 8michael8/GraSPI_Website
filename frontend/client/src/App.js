@@ -3,7 +3,13 @@ import './App.css';
 import { gsap } from "gsap";
 
 function App() {
+    const animation = gsap.timeline();
   useEffect(() => {
+    const targets = document.querySelectorAll(".homePage .graspiDesc div");
+    const numberOfTargets = targets.length;
+    const duration = 2;
+    const repeatDelay = duration * (numberOfTargets-1)
+
     const body = document.body;
     const overlay = document.createElement("div");
 
@@ -19,7 +25,13 @@ function App() {
     body.appendChild(overlay);
 
     gsap.to(".homePage .title h1", {
-      y: -80,
+      y: (i, target) => {
+        if (target.classList.contains("t2") || target.classList.contains("t4")) {
+          return "8vh";
+        } else {
+          return "-8vh";
+        }
+      },
       opacity: 1,
       duration: 1,
       ease: "power2.out",
@@ -58,16 +70,34 @@ function App() {
     });
     // Change the color immediately
     gsap.set(".homePage .title h1", {
-      color: "black", // Instant color change
-      delay: 0.8,    // Delay before the movement starts
-      ease: "none",   // No easing for the movement
+      color: "black",
+      delay: 0.8,
+      ease: "none",
     });
 
     // Animate the movement with a duration
     gsap.to(".homePage .title h1", {
-      y: "-40vh",   // Move upwards
-      duration: 1.5,  // Duration for the movement
+       y: (i, target) => {
+        if (target.classList.contains("t2") || target.classList.contains("t4")) {
+          return "-24vh";
+        } else {
+          return "-40vh";
+        }
+      },
+      duration: 1.5,
     });
+
+    gsap.set(".homePage .graspiDesc", {autoAlpha:1})
+    animation.from(targets, {y:80, duration:duration, opacity:0, stagger:{
+        each:duration,
+        repeat:-1,
+        repeatDelay:repeatDelay
+    }})
+    .to(targets, {y:-80, duration:duration, opacity:0, stagger:{
+        each:duration,
+        repeat:-1,
+        repeatDelay:repeatDelay
+    }}, duration);
 
     }, 4000);
 
@@ -89,14 +119,26 @@ function App() {
 
 
   return (
-    <div className="homePage">
-        <div className = "title">
-            <h1 className="t1">Gra<span>ph-based</span></h1>
-            <h1 className="t2">S<span>tructure</span></h1>
-            <h1 className="t3">P<span>roperty</span></h1>
-            <h1 className="t4">I<span>dentifier</span></h1>
+    <>
+      <div className="homePage">
+        <div className="title">
+          <h1 className="t1">Gra<span>ph-based</span></h1>
+          <h1 className="t2">S<span>tructure</span></h1>
+          <h1 className="t3">P<span>roperty</span></h1>
+          <h1 className="t4">I<span>dentifier</span></h1>
         </div>
-    </div>
+        <div className="graspiDesc">
+            <div>A powerful C/C++ software package</div>
+            <div>Designed for analyzing segmented microstructures using graph theory</div>
+            <div>Efficiently computes comprehensive library of descriptors</div>
+            <div>Offers deep insights into material properties</div>
+            <div>Low computational overhead</div>
+        </div>
+      </div>
+      <div className="libraries">
+        <p>TeST</p>
+      </div>
+    </>
   );
 }
 
