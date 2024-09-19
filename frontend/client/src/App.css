@@ -2,12 +2,27 @@ body {
     background: white;
 }
 
-.homePage h1{
-  color: white;
-  line-height: 1.2;
-  text-align: center;
-  top:40%;
-  left: 45%;
-  position: absolute;
+.homePage .title h1{
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size:2.8vw;
+    opacity: 0;
+    color: white;
+    text-align: center;
+    top:40%;
+    position: absolute;
+}
+
+
+.homePage .title .t1 {
+    left:20%;
+}
+.homePage .title .t2 {
+    left:40%;
+}
+.homePage .title .t3 {
+    left:55%;
+}
+.homePage .title .t4 {
+    left:70%;
 }
 
