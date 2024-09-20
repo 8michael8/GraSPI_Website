@@ -1,11 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { gsap } from "gsap";
 import snap from './images/snap.png';
+import igraph from './images/igraph.png';
+import rustworkx from './images/rustworkx.png'
+import graphtool from './images/graphTool.png'
 
 function App() {
     const animation = gsap.timeline();
   useEffect(() => {
+
+    window.scrollTo(0, 0);
+        document.body.classList.add('no-scroll');
 
     let path = document.querySelector("path");
     let pathLength = path.getTotalLength();
@@ -62,7 +68,6 @@ function App() {
       ease: "power1.out" // Easing function
     });
 
-    // Step 2: Move each letter towards the center to form the word
     gsap.to(".homePage .title h1", {
       x: (i) => {
         if (i === 0) return '25.4vw';
@@ -81,7 +86,8 @@ function App() {
     });
 
     setTimeout(() =>{
-            gsap.to(overlay, {
+        document.body.classList.remove('no-scroll');
+        gsap.to(overlay, {
       duration: 1.2,
       y: "-100%",
       ease: "power2.inOut",
@@ -121,18 +127,35 @@ function App() {
 
   }, []);
 
+    const [isPopupVisible, setPopupVisible] = useState(false);
+    const [popupContent, setPopupContent] = useState({ img: "", text: "", header: ""});
 
-  // This useEffect handles the fetch call to your API
-  useEffect(() => {
-    fetch("http://localhost:5000/api/test")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error("Error connecting to backend:", error);
+    const libTransition = (img, text, header) => {
+    document.body.classList.add("no-scroll");
+    setPopupContent({ img, text, header });
+    setPopupVisible(true);
+
+    setTimeout(() => {
+      gsap.to(".popup", {
+        duration: 1.2,
+        y: "0%",
+        ease: "power2.inOut"
       });
-  }, []);
+    }, 0);
+  };
+
+  const closePopup = () => {
+    gsap.to(".popup", {
+      duration: 1.2,
+      y: "150%",
+      ease: "power2.inOut",
+      onComplete: () => {
+        document.body.classList.remove("no-scroll");
+            setPopupContent({ img: "", text:"", header: "" });
+        setPopupVisible(false);
+      }
+    });
+  };
 
 
   return (
@@ -161,26 +184,37 @@ function App() {
         </div>
 
         {/* End Line Container*/}
+        <div class="circle"></div>
 
       </div>
-        <div className="libraries">
-            <div className = "snap">
-                <img src={snap} alt=""/>
-
+        <div className="libraries" >
+            <div className="snap" onClick={() => libTransition(snap, "SNAP is a general purpose, high performance system for analysis and manipulation of large networks. SNAP is written in C++ and optimized for maximum performance and compact graph representation. It easily scales to massive networks with hundreds of millions of nodes, and billions of edges.", "SNAP (Stanford Network Analysis Platform)")}>
+                <img src={snap} alt="" className="libPic"/>
             </div>
 
-            <div className = "igraph">
-
+            <div className="igraph" onClick={() => libTransition(igraph, "igraph is a collection of network analysis tools with the emphasis on efficiency, portability, and ease of use. igraph is open source and free. igraph can be programmed in R, Python, Mathematica, and C/C++.", "igraph")}>
+                <img src={igraph} alt="" className="libPic"/>
             </div>
 
-            <div className = "rustworkx">
-
+            <div className="rustworkx" onClick={() => libTransition(rustworkx, "rustworkx is a Python package for working with graphs and complex networks. It enables the creation, interaction with, and study of graphs and networks.", "rustworkx")}>
+                <img src={rustworkx} alt="" className="libPic"/>
             </div>
 
-            <div className = "graphTool">
-
+            <div className="graphtool" onClick={() => libTransition(graphtool, "Graph-tool is an efficient Python module for manipulation and statistical analysis of graphs (a.k.a. networks). Contrary to most other Python modules with similar functionality, the core data structures and algorithms are implemented in C++, making extensive use of template metaprogramming, based heavily on the Boost Graph Library. This confers it a level of performance that is comparable (both in memory usage and computation time) to that of a pure C/C++ library.", "graph-tool")}>
+                <img src={graphtool} alt="" className="libPic"/>
             </div>
+
+                  <div class="circle2"></div>
       </div>
+
+    {isPopupVisible && (
+        <div className="popup">
+            <img src={popupContent.img} alt="Content Image" className="popup-img" />
+            <h1 className="popup-h">{popupContent.header}</h1>
+            <p className="popup-p">{popupContent.text}</p>
+            <button className="close" onClick={closePopup}>X</button>
+        </div>
+    )}
     </>
   );
 }

@@ -5,6 +5,12 @@ body {
     overflow-x: hidden;
 }
 
+body.no-scroll {
+  overflow: hidden;
+}
+
+
+
 .homePage {
     width: 100%;
     height: 100vh; /* Fill the viewport height */
@@ -82,7 +88,7 @@ svg {
     height: 90%;
 }
 
-.libraries .snap {
+.libraries .snap, .libraries .igraph, .libraries .rustworkx, .libraries .graphtool {
     border-style: solid;
     border-width: 0.4vw;
     border-color: black;
@@ -95,11 +101,11 @@ svg {
     transition: transform 0.3s ease;
 }
 
-.libraries .snap:hover {
+.libraries .snap:hover, .libraries .igraph:hover, .libraries .rustworkx:hover, .libraries .graphtool:hover {
     transform: scale(1.2);
 }
 
-.libraries .snap img {
+.libraries .snap img, .libraries .igraph img, .rustworkx img, .libraries .graphtool img {
     width: 15vw;
     height: 30vh;
     position: absolute;
@@ -130,7 +136,7 @@ svg {
     margin-top:75vh;
 }
 
-.libraries .graphTool {
+.libraries .graphtool {
     border-style: solid;
     border-width: 0.4vw;
     border-color: black;
@@ -143,4 +149,81 @@ svg {
 }
 
 
+/* Popup styles */
+.popup {
+  position: fixed;
+  top: 7vh;
+  left: 7vw;
+  width: 85vw;
+  height: 85vh;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  transform: translateY(150%);
+}
 
+.popup-img {
+  width: 20%;
+  left: 10%;
+  background:white;
+  position:absolute;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.popup-p{
+    position:absolute;
+    left:40%;
+    color:white;
+    margin-right:4vw;
+    font-size: 2vw;
+}
+
+.popup-h {
+    font-family: 'Roboto Condensed', sans-serif;
+    text-align: center;
+    position:absolute;
+    font-size: 2.5vw;
+    top: 10%;
+    color:white;
+}
+
+.circle {
+    position: absolute;
+    width: 7vw;       /* Diameter of the circle using viewport width */
+    height: 7vw;      /* Diameter of the circle using viewport width */
+    background-color: red; /* Color of the circle */
+    border-radius: 50%;     /* This makes it round */
+    z-index: 2;
+    left: 47%;              /* Center the circle horizontally */
+    top: 45%;               /* Center the circle vertically */
+
+    /* Optional styles */
+    border: 2px solid #000; /* Border around the circle */
+}
+
+.circle2 {
+    position: absolute;
+    width: 7vw;       /* Diameter of the circle using viewport width */
+    height: 7vw;      /* Diameter of the circle using viewport width */
+    background-color: blue; /* Color of the circle */
+    border-radius: 50%;     /* This makes it round */
+    z-index: 2;
+    left: 47%;              /* Center the circle horizontally */
+    top: 225%;               /* Center the circle vertically */
+
+    /* Optional styles */
+    border: 2px solid #000; /* Border around the circle */
+}
