@@ -1,10 +1,28 @@
 import React, { useEffect } from 'react';
 import './App.css';
 import { gsap } from "gsap";
+import snap from './images/snap.png';
 
 function App() {
     const animation = gsap.timeline();
   useEffect(() => {
+
+    let path = document.querySelector("path");
+    let pathLength = path.getTotalLength();
+
+    path.style.strokeDasharray = pathLength + ' ' + pathLength;
+    path.style.strokeDashoffset = pathLength;
+
+    window.addEventListener("scroll", () => {
+        //calculate % down
+        var scrollPercentage = (document.documentElement.scrollTop + document.body.scrollTop) / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
+        //Length to offset the dashes
+        var drawLength = pathLength * scrollPercentage;
+        //draw in reverse
+        path.style.strokeDashoffset = pathLength - drawLength;
+    })
+
+
     const targets = document.querySelectorAll(".homePage .graspiDesc div");
     const numberOfTargets = targets.length;
     const duration = 2;
@@ -87,7 +105,7 @@ function App() {
       duration: 1.5,
     });
 
-    gsap.set(".homePage .graspiDesc", {autoAlpha:1})
+    gsap.set(".homePage .graspiDesc div", {autoAlpha:1, opacity:1})
     animation.from(targets, {y:80, duration:duration, opacity:0, stagger:{
         each:duration,
         repeat:-1,
@@ -117,7 +135,6 @@ function App() {
   }, []);
 
 
-
   return (
     <>
       <div className="homePage">
@@ -134,9 +151,35 @@ function App() {
             <div>Offers deep insights into material properties</div>
             <div>Low computational overhead</div>
         </div>
+
+        {/* Line Container*/}
+        <div className="line-container">
+            <svg viewBox="0 0 1200 2745" fill="none" preserveAspectRatio="xMidYMax meet">
+                <path d="M442 3L7.5 276L187.5 631.5H363L539 983.5L630.75 807.5L722.5 631.5L894.5 983.5V1529H7.5L894.5 2197L7.5 2179L442 2743" stroke="black" strokeWidth="10"/>
+            </svg>
+
+        </div>
+
+        {/* End Line Container*/}
+
       </div>
-      <div className="libraries">
-        <p>TeST</p>
+        <div className="libraries">
+            <div className = "snap">
+                <img src={snap} alt=""/>
+
+            </div>
+
+            <div className = "igraph">
+
+            </div>
+
+            <div className = "rustworkx">
+
+            </div>
+
+            <div className = "graphTool">
+
+            </div>
       </div>
     </>
   );
