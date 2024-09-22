@@ -194,10 +194,10 @@ def shortest_path(graph):
     return listOfShortestPaths
 
 
-def runIgraph():
+def runIgraph(type):
     file = "./testCases/10x10.txt"
     g = generateGraph(file)
-    output = 'frontend/client/src/graph/igraph.png'
+    output = f'frontend/client/src/graph/igraph{type}.png'
     visual2D(g, output)
 
     return 0
