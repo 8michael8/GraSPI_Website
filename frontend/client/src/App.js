@@ -134,6 +134,7 @@ function App() {
     const [error, setError] = useState('');
     // State for the generated image
     const [generatedImage, setGeneratedImage] = useState(null);
+    const [loading, setLoading] = useState(false);
 
 const libTransition = (library) => {
     document.body.classList.add("no-scroll");
