@@ -196,12 +196,32 @@ svg {
 }
 
 
-.popup-img, .graphImage, .popup-img2 {
+.popup-img {
   opacity: 1;
   width: 20%;
   left: 10%;
   background:white;
   position:absolute;
+}
+.popup-img2 {
+  opacity: 1;
+  width: 20%;
+  left: 13%;
+  background:white;
+  position:absolute;
+}
+
+.graphImage {
+  opacity: 1;
+  width: 30%;
+  left: 8%;
+  background:white;
+  position:absolute;
+}
+.graphButton {
+    position: absolute;
+    top: 86%;
+    left:17%;
 }
 
 .close {

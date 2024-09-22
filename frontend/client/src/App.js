@@ -323,7 +323,7 @@ const graphCreation = (libraryName) => {
                 }}>
                     &#x2190;
                 </button>
-                <button onClick={() => graphCreation(popupContent.header)}>Generate SNAP Graph</button>
+                <button className="graphButton" onClick={() => graphCreation(popupContent.header)}>Generate SNAP Graph</button>
         <img
             src={popupContent.graphCode}
             alt=""
