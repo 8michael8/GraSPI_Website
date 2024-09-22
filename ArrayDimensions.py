@@ -7,4 +7,3 @@ class ArrayDimensions:
 
 d_a = ArrayDimensions()
 
-## hello

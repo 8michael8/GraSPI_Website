@@ -199,6 +199,8 @@ const bfsTransition = () => {
       }
     });
   };
+
+// post request to backend, retrieving information
 const graphCreation = (libraryName) => {
     setError(null);
     fetch(`/create/${libraryName}`, { method: "POST" })

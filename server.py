@@ -10,6 +10,8 @@ def create_graph(library_name):
     # Simulating image generation logic
     if library_name == "snap":
         runSnap()
+    elif library_name == "igraph":
+        runIgrpah()
 
     image_path = os.path.join('frontend/client/src/graph', f'{library_name}.png')
     return jsonify({'image_path': f'/static/{library_name}.png'})

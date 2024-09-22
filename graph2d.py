@@ -128,6 +128,7 @@ def visualize_graph(G, output_file):
     # Draw the graph using the specified layout
     snap.DrawGViz(G, Layout, output_file, "Graph Visualization", True)
 
+# produce the visualization for graph creation 2D
 def runSnap():
     d_g = GraphDimensions()
     d_a = ArrayDimensions()
