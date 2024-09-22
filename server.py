@@ -2,6 +2,7 @@ from flask import Flask, send_from_directory, jsonify
 import os
 #SNAP
 from graph2d import runSnap
+from graph2dIgraph import runIgraph
 
 app = Flask(__name__, static_folder='frontend/client/build', static_url_path='/')
 
@@ -11,7 +12,7 @@ def create_graph(library_name):
     if library_name == "snap":
         runSnap()
     elif library_name == "igraph":
-        runIgrpah()
+        runIgraph()
 
     image_path = os.path.join('frontend/client/src/graph', f'{library_name}.png')
     return jsonify({'image_path': f'/static/{library_name}.png'})

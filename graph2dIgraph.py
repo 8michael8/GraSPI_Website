@@ -116,7 +116,6 @@ def visual2D(g,fileName):
             va='top'  # Vertical alignment
         )
     plt.savefig(fileName) 
-    plt.show()
 
 def visual3D(g,fileName):
     edges = g.get_edgelist()
@@ -146,7 +145,6 @@ def visual3D(g,fileName):
         ax.text(x, y, z, str(i), color='black')
 
     plt.savefig(fileName) 
-    plt.show() 
 
 
 
@@ -177,7 +175,6 @@ def shortest_path(graph):
     for c in ccp:
         for x in c:
             if graph.vs[x]['color'] == 'black' or graph.vs[x]['color'] == 'green':
-                print()
                 listOfShortestPaths[x] = graph.get_shortest_paths(greenVertex,x,output="vpath")
     
     return listOfShortestPaths
