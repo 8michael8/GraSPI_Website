@@ -5,6 +5,7 @@ import snap from './images/snap.png';
 import igraph from './images/igraph.png';
 import rustworkx from './images/rustworkx.png'
 import graphtool from './images/graphTool.png'
+import snapCode from './images/snapGraphCode.png'
 
 function App() {
     const animation = gsap.timeline();
@@ -44,7 +45,7 @@ function App() {
     overlay.style.width = "100%";
     overlay.style.height = "100%";
     overlay.style.backgroundColor = "black";
-    overlay.style.zIndex = -1;
+    overlay.style.zIndex = 5;
 
     body.appendChild(overlay);
 
@@ -128,34 +129,126 @@ function App() {
   }, []);
 
     const [isPopupVisible, setPopupVisible] = useState(false);
-    const [popupContent, setPopupContent] = useState({ img: "", text: "", header: ""});
+    const [popupContent, setPopupContent] = useState({ img: "", text: "", header: "", algorithmText: "", filterText: "", bfsText: "", graphCode: ""});
+    const [currentSlide, setCurrentSlide] = useState('intro');
+    const [error, setError] = useState('');
+    // State for the generated image
+    const [generatedImage, setGeneratedImage] = useState(null);
 
-    const libTransition = (img, text, header) => {
+const libTransition = (library) => {
     document.body.classList.add("no-scroll");
-    setPopupContent({ img, text, header });
+    setPopupContent({ img: library.img, text: library.text, header: library.header, algorithmText: library.algoText, filterText: library.filterText, bfsText: library.bfsText, graphCode: library.graphCode });
     setPopupVisible(true);
-
+    setCurrentSlide('intro');
     setTimeout(() => {
-      gsap.to(".popup", {
-        duration: 1.2,
-        y: "0%",
-        ease: "power2.inOut"
-      });
+        gsap.to(".popup", {
+            duration: 1.2,
+            y: "0%",
+            ease: "power2.inOut"
+        });
     }, 0);
-  };
+};
+/*
+const graphTransition = () => {
+    document.body.classList.add("no-scroll");
+    setCurrentSlide('graph');
+    setTimeout(() => {
+        gsap.to(".popup", {
+            duration: 1.2,
+            y: "0%",
+            ease: "power2.inOut"
+        });
+    }, 0);
+};
+
+const filterTransition = () => {
+    document.body.classList.add("no-scroll");
+    setCurrentSlide('filter');
+    setTimeout(() => {
+        gsap.to(".popup", {
+            duration: 1.2,
+            y: "0%",
+            ease: "power2.inOut"
+        });
+    }, 0);
+};
+
+const bfsTransition = () => {
+    document.body.classList.add("no-scroll");
+    setCurrentSlide('bfs');
+    setTimeout(() => {
+        gsap.to(".popup", {
+            duration: 1.2,
+            y: "0%",
+            ease: "power2.inOut"
+        });
+    }, 0);
+};
+*/
 
   const closePopup = () => {
+    setGeneratedImage(null);  // Reset generated image
     gsap.to(".popup", {
       duration: 1.2,
       y: "150%",
       ease: "power2.inOut",
       onComplete: () => {
         document.body.classList.remove("no-scroll");
-            setPopupContent({ img: "", text:"", header: "" });
+            setPopupContent({ img: "", text:"", header: "", algorithmText: "", filterText: "", bfsText: ""});
         setPopupVisible(false);
       }
     });
   };
+const graphCreation = (libraryName) => {
+    setError(null);
+    fetch(`/create/${libraryName}`, { method: "POST" })
+    .then(response => response.json())
+    .then(data => {
+        setGeneratedImage(data.image_path); // Ensure this is the correct path
+    })
+    .catch(error => {
+        setError(`Failed to load image: ${error.message}`);
+        console.error("Fetch error:", error);
+    });
+};
+
+
+
+  const libraries = [
+    {
+        img: snap,
+        text: "SNAP is a general purpose, high performance system for analysis and manipulation of large networks. SNAP is written in C++ and optimized for maximum performance and compact graph representation. It easily scales to massive networks with hundreds of millions of nodes, and billions of edges.",
+        header: "snap",
+        algoText: "Testing3",
+        filterText: "DDDDDD",
+        bfsText: "444444444",
+        graphCode: snapCode
+    },
+    {
+        img: igraph,
+        text: "igraph is a collection of network analysis tools with the emphasis on efficiency, portability, and ease of use. igraph is open source and free. igraph can be programmed in R, Python, Mathematica, and C/C++.",
+        header: "igraph",
+        algoText: "Testing2",
+        filterText: "CCCCCCCcc",
+        bfsText: "3333333"
+    },
+    {
+        img: rustworkx,
+        text: "rustworkx is a Python package for working with graphs and complex networks. It enables the creation, interaction with, and study of graphs and networks.",
+        header: "rustworkx",
+        algoText: "Testing3",
+        filterText: "BBBBB",
+        bfsText: "2222222222"
+    },
+    {
+        img: graphtool,
+        text: "Graph-tool is an efficient Python module for manipulation and statistical analysis of graphs (a.k.a. networks). Contrary to most other Python modules with similar functionality, the core data structures and algorithms are implemented in C++, making extensive use of template metaprogramming, based heavily on the Boost Graph Library. This confers it a level of performance that is comparable (both in memory usage and computation time) to that of a pure C/C++ library.",
+        header: "graphtool",
+        algoText: "Testing4",
+        filterText: "AAAAAAAA",
+        bfsText: "1111111"
+    }
+];
 
 
   return (
@@ -188,33 +281,106 @@ function App() {
 
       </div>
         <div className="libraries" >
-            <div className="snap" onClick={() => libTransition(snap, "SNAP is a general purpose, high performance system for analysis and manipulation of large networks. SNAP is written in C++ and optimized for maximum performance and compact graph representation. It easily scales to massive networks with hundreds of millions of nodes, and billions of edges.", "SNAP (Stanford Network Analysis Platform)")}>
-                <img src={snap} alt="" className="libPic"/>
+                    {libraries.map((library, index) => (
+            <div key={index} className={`lib ${library.header.toLowerCase()}`} onClick={() => libTransition(library)}>
+                <img src={library.img} alt={library.header} className="libPic"/>
             </div>
-
-            <div className="igraph" onClick={() => libTransition(igraph, "igraph is a collection of network analysis tools with the emphasis on efficiency, portability, and ease of use. igraph is open source and free. igraph can be programmed in R, Python, Mathematica, and C/C++.", "igraph")}>
-                <img src={igraph} alt="" className="libPic"/>
-            </div>
-
-            <div className="rustworkx" onClick={() => libTransition(rustworkx, "rustworkx is a Python package for working with graphs and complex networks. It enables the creation, interaction with, and study of graphs and networks.", "rustworkx")}>
-                <img src={rustworkx} alt="" className="libPic"/>
-            </div>
-
-            <div className="graphtool" onClick={() => libTransition(graphtool, "Graph-tool is an efficient Python module for manipulation and statistical analysis of graphs (a.k.a. networks). Contrary to most other Python modules with similar functionality, the core data structures and algorithms are implemented in C++, making extensive use of template metaprogramming, based heavily on the Boost Graph Library. This confers it a level of performance that is comparable (both in memory usage and computation time) to that of a pure C/C++ library.", "graph-tool")}>
-                <img src={graphtool} alt="" className="libPic"/>
-            </div>
+        ))}
 
                   <div class="circle2"></div>
       </div>
+{isPopupVisible && (
+    <div className="popup">
+        {currentSlide === 'intro' && (
+            <>
+                <img src={popupContent.img} alt="" className="popup-img" />
+                <h1 className="popup-h">{popupContent.header}</h1>
+                <p className="popup-p">{popupContent.text}</p>
+                <button className="next-button" onClick={() => setCurrentSlide('graph')}>
+                     &#x2192;
+                </button>
+                <button className="prev-button" onClick={() => setCurrentSlide('bfs')}>
+                     &#x2190;
+                </button>
+            </>
+        )}
+        {currentSlide === 'graph' && (
+            <>
+                <h1 className="popup-h">Graph Creation</h1>
+                <p className="popup-algo">{popupContent.algorithmText}</p>
+                <button
+                className="next-button"
+                onClick={() => {
+                    setCurrentSlide('filter'); // Change to graph slide
+                    setGeneratedImage(null);  // Reset generated image
+                }}
+            >
+                     &#x2192;
+                </button>
+                <button className="prev-button" onClick={() => {
+                    setCurrentSlide('intro'); // Change to graph slide
+                    setGeneratedImage(null);  // Reset generated image
+                }}>
+                    &#x2190;
+                </button>
+                <button onClick={() => graphCreation(popupContent.header)}>Generate SNAP Graph</button>
+        <img
+            src={popupContent.graphCode}
+            alt=""
+            className="popup-img2"
+            style={{ opacity: generatedImage ? 0 : 1 }}
+        />
+            {generatedImage && (
+                <img src={generatedImage} alt="Generated Graph" className="graphImage" />
+            )}
+            </>
+        )}
+        {currentSlide === 'filter' && (
+            <>
+                <h1 className="popup-h">Filtering</h1>
+                <p className="popup-algo">{popupContent.filterText}</p>
+                <button className="next-button" onClick={() => {
+                    setCurrentSlide('bfs'); // Change to graph slide
+                    setGeneratedImage(null);  // Reset generated image
+                }}
+            >
+                    &#x2192;
+                </button>
+                <button className="prev-button" onClick={() => {
+                    setCurrentSlide('graph'); // Change to graph slide
+                    setGeneratedImage(null);  // Reset generated image
+                }}
+            >
+                     &#x2190;
+                </button>
+            </>
+        )}
 
-    {isPopupVisible && (
-        <div className="popup">
-            <img src={popupContent.img} alt="Content Image" className="popup-img" />
-            <h1 className="popup-h">{popupContent.header}</h1>
-            <p className="popup-p">{popupContent.text}</p>
-            <button className="close" onClick={closePopup}>X</button>
-        </div>
-    )}
+        {currentSlide === 'bfs' && (
+            <>
+                <h1 className="popup-h">BFS</h1>
+                <p className="popup-algo">{popupContent.bfsText}</p>
+                <button className="next-button" onClick={() => {
+                    setCurrentSlide('intro'); // Change to graph slide
+                    setGeneratedImage(null);  // Reset generated image
+                }}
+            >
+                    &#x2192;
+                </button>
+                <button className="prev-button" onClick={() => {
+                    setCurrentSlide('filter'); // Change to graph slide
+                    setGeneratedImage(null);  // Reset generated image
+                }}
+            >
+                     &#x2190;
+                </button>
+            </>
+        )}
+
+        <button className="close" onClick={closePopup}>X</button>
+    </div>
+)}
+
     </>
   );
 }

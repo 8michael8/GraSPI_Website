@@ -14,7 +14,7 @@ body.no-scroll {
 .homePage {
     width: 100%;
     height: 100vh; /* Fill the viewport height */
-    z-index: 2;
+    z-index: 10;
 }
 
 .libraries {
@@ -32,6 +32,7 @@ body.no-scroll {
     text-align: center;
     top: 40%;
     position: absolute; /* Keep it absolute for positioning within .homePage */
+    z-index:10;
 }
 
 .homePage .title .t1 {
@@ -164,7 +165,39 @@ svg {
   transform: translateY(150%);
 }
 
-.popup-img {
+.popup .next-button {
+    border: none;
+    background: none;
+    font-size: 6vw;
+    cursor: pointer;
+    padding: 1vw;
+    z-index: 20;
+    color: gray;
+    position: absolute;
+    top: 80%;
+    left:51%;
+}
+
+.popup .next-button:hover, .popup .prev-button:hover {
+    color: white; /* Change color on hover (optional) */
+}
+
+.popup .prev-button {
+    border: none;
+    background: none;
+    font-size: 6vw;
+    cursor: pointer;
+    padding: 1vw;
+    z-index: 20;
+    color: gray;
+    position: absolute;
+    top: 80%;
+    left:41%;
+}
+
+
+.popup-img, .graphImage, .popup-img2 {
+  opacity: 1;
   width: 20%;
   left: 10%;
   background:white;
@@ -191,6 +224,14 @@ svg {
     font-size: 2vw;
 }
 
+.popup-algo{
+    position:absolute;
+    left:60%;
+    color:white;
+    margin-right:4vw;
+    font-size: 2vw;
+}
+
 .popup-h {
     font-family: 'Roboto Condensed', sans-serif;
     text-align: center;
@@ -200,15 +241,17 @@ svg {
     color:white;
 }
 
+
 .circle {
     position: absolute;
     width: 7vw;       /* Diameter of the circle using viewport width */
     height: 7vw;      /* Diameter of the circle using viewport width */
     background-color: red; /* Color of the circle */
     border-radius: 50%;     /* This makes it round */
-    z-index: 2;
+    z-index: 10;
     left: 47%;              /* Center the circle horizontally */
     top: 45%;               /* Center the circle vertically */
+    z-index:4;
 
     /* Optional styles */
     border: 2px solid #000; /* Border around the circle */
