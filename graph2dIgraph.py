@@ -196,9 +196,20 @@ def shortest_path(graph):
 
 def runIgraph(type):
     file = "./testCases/10x10.txt"
-    g = generateGraph(file)
     output = f'frontend/client/src/graph/igraph{type}.png'
-    visual2D(g, output)
+    g = generateGraph(file)
+
+    if type == "graph":
+        visual2D(g, output)
+        return 0
+    elif type == "filter":
+        fg = filterGraph(g)
+        visual2D(fg, output)
+        return 0
+    elif type == "bfs":
+        fg = filterGraph(g)
+        path = shortest_path(fg)
+        return path
 
     return 0
 
