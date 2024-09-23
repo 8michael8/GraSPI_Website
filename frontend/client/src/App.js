@@ -8,12 +8,12 @@ import graphtool from './images/graphTool.png'
 import snapCode from './images/snapGraphCode.png'
 import snapFiltering from './images/snapFiltering.png'
 import snapBFS from './images/snapBFS.png'
-import igraphGraph from './images/rustworkxGraph.png'
-import igraphFilter from './images/rustworkxFilter.png'
-import igraphBFS from './images/rustworkxBFS.png'
-import rustGraph from './images/igraphGraph.png'
-import rustFilter from './images/igraphFilter.png'
-import rustBFS from './images/igraphBFS.png'
+import rustGraph from './images/rustworkxGraph.png'
+import rustFilter from './images/rustworkxFilter.png'
+import rustBFS from './images/rustworkxBFS.png'
+import igraphGraph from './images/igraphGraph.png'
+import igraphFilter from './images/igraphFilter.png'
+import igraphBFS from './images/igraphBFS.png'
 
 function App() {
     const animation = gsap.timeline();
