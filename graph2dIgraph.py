@@ -167,12 +167,12 @@ def filterGraph(graph):
     for edge in edgeList:
         currentNode = edge[0]
         toNode = edge[1]
-        if (graph.vs[currentNode]['color'] == graph.vs[toNode]['color']):
+        if(graph.vs[currentNode]['color'] == graph.vs[toNode]['color']):
             keptEdges.append(edge)
-        elif (graph.vs[currentNode]['color'] == 'green' or graph.vs[toNode]['color'] == 'green'):
+        elif(graph.vs[currentNode]['color'] == 'green' or graph.vs[toNode]['color'] == 'green'):
             keptEdges.append(edge)
-
-    filteredGraph = graph.subgraph_edges(keptEdges, delete_vertices=False)
+    
+    filteredGraph = graph.subgraph_edges(keptEdges,delete_vertices = False)
 
     return filteredGraph
 
@@ -189,16 +189,27 @@ def shortest_path(graph):
     for c in ccp:
         for x in c:
             if graph.vs[x]['color'] == 'black' or graph.vs[x]['color'] == 'green':
-                listOfShortestPaths[x] = graph.get_shortest_paths(greenVertex, x, output="vpath")
+                listOfShortestPaths[x] = graph.get_shortest_paths(greenVertex, x, output="vpath")[0]
 
     return listOfShortestPaths
 
 
 def runIgraph(type):
     file = "./testCases/10x10.txt"
-    g = generateGraph(file)
     output = f'frontend/client/src/graph/igraph{type}.png'
-    visual2D(g, output)
+    g = generateGraph(file)
+
+    if type == "graph":
+        visual2D(g, output)
+        return 0
+    elif type == "filter":
+        fg = filterGraph(g)
+        visual2D(fg)
+        return 0
+    elif type == "bfs":
+        fg = filterGraph(g)
+        paths = shortest_path(fg)
+        return paths
 
     return 0
 
