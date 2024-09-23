@@ -5,17 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="32bbcab8-b904-4cb7-9ec6-8b8b957a3c70" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/client/src/images/snapBFS.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/client/src/images/snapFiltering.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/client/src/images/igraphBFS.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/client/src/images/igraphFilter.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/client/src/images/igraphGraph.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/client/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/client/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/client/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/client/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/client/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/client/src/graph/igraph.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/client/src/graph/snap.dot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/client/src/graph/snap.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graph2d.py" beforeDir="false" afterPath="$PROJECT_DIR$/graph2d.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graph2dIGraph.py" beforeDir="false" afterPath="$PROJECT_DIR$/graph2dIGraph.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

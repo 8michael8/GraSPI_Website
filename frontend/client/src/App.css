@@ -390,3 +390,8 @@ svg {
     }
 }
 
+.githubIcon {
+  color: black;
+  position: absolute;
+  font-size: 2vw;
+}

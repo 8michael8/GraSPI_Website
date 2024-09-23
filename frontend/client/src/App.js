@@ -8,6 +8,12 @@ import graphtool from './images/graphTool.png'
 import snapCode from './images/snapGraphCode.png'
 import snapFiltering from './images/snapFiltering.png'
 import snapBFS from './images/snapBFS.png'
+import igraphGraph from './images/rustworkxGraph.png'
+import igraphFilter from './images/rustworkxFilter.png'
+import igraphBFS from './images/rustworkxBFS.png'
+import rustGraph from './images/igraphGraph.png'
+import rustFilter from './images/igraphFilter.png'
+import rustBFS from './images/igraphBFS.png'
 
 function App() {
     const animation = gsap.timeline();
@@ -252,7 +258,8 @@ const downloadPathsAsText = () => {
         ),
         graphCode: snapCode,
         filterCode: snapFiltering,
-        bfsCode: snapBFS
+        bfsCode: snapBFS,
+        github: "https://github.com/8michael8/GraSPI_SNAP/tree/master"
     },
     {
         img: igraph,
@@ -260,7 +267,11 @@ const downloadPathsAsText = () => {
         header: "igraph",
         algoText: "Testing2",
         filterText: "CCCCCCCcc",
-        bfsText: "3333333"
+        bfsText: "3333333",
+        github: "https://github.com/wenqizheng326/graspi_igraph",
+        graphCode: igraphGraph,
+        filterCode: igraphFilter,
+        bfsCode: igraphBFS
     },
     {
         img: rustworkx,
@@ -268,7 +279,11 @@ const downloadPathsAsText = () => {
         header: "rustworkx",
         algoText: "Testing3",
         filterText: "BBBBB",
-        bfsText: "2222222222"
+        bfsText: "2222222222",
+        github: "https://github.com/jzzhou03/material-microstructure-rustworkx",
+        graphCode: rustGraph,
+        filterCode: rustFilter,
+        bfsCode: rustBFS
     },
     {
         img: graphtool,
@@ -325,6 +340,7 @@ const downloadPathsAsText = () => {
         <div className="libraries" >
                     {libraries.map((library, index) => (
             <div key={index} className={`lib ${library.header.toLowerCase()}`} onClick={() => libTransition(library)}>
+                <a className = "githubIcon" href={library.github} target="_blank"><i class="fab fa-github"></i></a>
                 <img src={library.img} alt={library.header} className="libPic"/>
             </div>
         ))}
