@@ -128,19 +128,39 @@ def visualize_graph(G, output_file):
     # Draw the graph using the specified layout
     snap.DrawGViz(G, Layout, output_file, "Graph Visualization", True)
 
-# produce the visualization for graph creation 2D
-def runSnap():
+
+def runSnap(type):
     d_g = GraphDimensions()
     d_a = ArrayDimensions()
     file = "./testCases/10x10.txt"
     VC = {}
+    output_file = f"frontend/client/src/graph/snap{type}.png"
     print("Generating Graph...")
     if read_array(file, VC, d_a, d_g):
         G = snap.TUNGraph.New()
         G = build_graph(G, d_g, d_a, VC, W, EC)
+
         # Visualize the graph
-        output_file = "frontend/client/src/graph/snap.png"
-        visualize_graph(G, output_file)
+        if type == "graph":
+            visualize_graph(G, output_file)
+            return 0
+        elif type == "filter":
+            filteredGraph = Filtering(G,VC)
+            SubGraph = filteredGraph.filter()
+            visualize_graph(SubGraph[0], output_file)
+            return 0
+        elif type == "bfs":
+            paths = {}
+            filteredGraph = Filtering(G, VC)
+            SubGraph = filteredGraph.filter()
+            for node in SubGraph[0].Nodes():
+                bfs = BFS(SubGraph[0], node.GetId(), d_g.n_bulk)
+                path = bfs.bfs()
+                if path and path[0] == bfs.source:
+                    paths[node.GetId()] = path
+                else:
+                    paths[node.GetId()] = d_g.n_bulk
+            return paths
     return 0
 
 def main():

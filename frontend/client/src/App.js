@@ -6,6 +6,14 @@ import igraph from './images/igraph.png';
 import rustworkx from './images/rustworkx.png'
 import graphtool from './images/graphTool.png'
 import snapCode from './images/snapGraphCode.png'
+import snapFiltering from './images/snapFiltering.png'
+import snapBFS from './images/snapBFS.png'
+import rustGraph from './images/rustworkxGraph.png'
+import rustFilter from './images/rustworkxFilter.png'
+import rustBFS from './images/rustworkxBFS.png'
+import igraphGraph from './images/igraphGraph.png'
+import igraphFilter from './images/igraphFilter.png'
+import igraphBFS from './images/igraphBFS.png'
 
 function App() {
     const animation = gsap.timeline();
@@ -129,15 +137,16 @@ function App() {
   }, []);
 
     const [isPopupVisible, setPopupVisible] = useState(false);
-    const [popupContent, setPopupContent] = useState({ img: "", text: "", header: "", algorithmText: "", filterText: "", bfsText: "", graphCode: ""});
+    const [popupContent, setPopupContent] = useState({ img: "", text: "", header: "", algorithmText: "", filterText: "", bfsText: "", graphCode: "", filterCode: "", bfsCode: ""});
     const [currentSlide, setCurrentSlide] = useState('intro');
     const [error, setError] = useState('');
-    // State for the generated image
     const [generatedImage, setGeneratedImage] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [path, setPath] = useState({});
 
 const libTransition = (library) => {
     document.body.classList.add("no-scroll");
-    setPopupContent({ img: library.img, text: library.text, header: library.header, algorithmText: library.algoText, filterText: library.filterText, bfsText: library.bfsText, graphCode: library.graphCode });
+    setPopupContent({ img: library.img, text: library.text, header: library.header, algorithmText: library.algoText, filterText: library.filterText, bfsText: library.bfsText, graphCode: library.graphCode, filterCode: library.filterCode, bfsCode: library.bfsCode });
     setPopupVisible(true);
     setCurrentSlide('intro');
     setTimeout(() => {
@@ -148,43 +157,6 @@ const libTransition = (library) => {
         });
     }, 0);
 };
-/*
-const graphTransition = () => {
-    document.body.classList.add("no-scroll");
-    setCurrentSlide('graph');
-    setTimeout(() => {
-        gsap.to(".popup", {
-            duration: 1.2,
-            y: "0%",
-            ease: "power2.inOut"
-        });
-    }, 0);
-};
-
-const filterTransition = () => {
-    document.body.classList.add("no-scroll");
-    setCurrentSlide('filter');
-    setTimeout(() => {
-        gsap.to(".popup", {
-            duration: 1.2,
-            y: "0%",
-            ease: "power2.inOut"
-        });
-    }, 0);
-};
-
-const bfsTransition = () => {
-    document.body.classList.add("no-scroll");
-    setCurrentSlide('bfs');
-    setTimeout(() => {
-        gsap.to(".popup", {
-            duration: 1.2,
-            y: "0%",
-            ease: "power2.inOut"
-        });
-    }, 0);
-};
-*/
 
   const closePopup = () => {
     setGeneratedImage(null);  // Reset generated image
@@ -201,18 +173,48 @@ const bfsTransition = () => {
   };
 
 // post request to backend, retrieving information
-const graphCreation = (libraryName) => {
+const graphCreation = (libraryName, type) => {
+    setLoading(true);
     setError(null);
-    fetch(`/create/${libraryName}`, { method: "POST" })
+    fetch(`/create/${libraryName}/${type}`, { method: "POST" })
     .then(response => response.json())
     .then(data => {
-        setGeneratedImage(data.image_path); // Ensure this is the correct path
+        setLoading(false);
+        if (typeof data.path === 'object' && !Array.isArray(data.path)) {
+            setPath(data.path);
+        } else if (typeof data.image_path === "string") {
+            setGeneratedImage(data.image_path);
+        }
     })
     .catch(error => {
         setError(`Failed to load image: ${error.message}`);
         console.error("Fetch error:", error);
     });
 };
+
+const downloadPathsAsText = () => {
+    if (!path || Object.keys(path).length === 0) {
+        setError("No paths to download.");
+        return;
+    }
+
+    let pathContent = "Graph Paths:\n";
+    Object.entries(path).forEach(([nodeID, subPath]) => {
+        pathContent += `Node ${nodeID}: ${subPath.join(" -> ")}\n`;
+    });
+
+    const blob = new Blob([pathContent], { type: 'text/plain' });
+
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = 'graph_paths.txt';
+    link.target = '_blank';
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
+
 
 
 
@@ -221,10 +223,45 @@ const graphCreation = (libraryName) => {
         img: snap,
         text: "SNAP is a general purpose, high performance system for analysis and manipulation of large networks. SNAP is written in C++ and optimized for maximum performance and compact graph representation. It easily scales to massive networks with hundreds of millions of nodes, and billions of edges.",
         header: "snap",
-        algoText: "Testing3",
-        filterText: "DDDDDD",
-        bfsText: "444444444",
-        graphCode: snapCode
+                algoText: (
+            <ul>
+                <li>Graphs are generated using the <code>build_graph</code> function.</li>
+                <li>Parameters:</li>
+                <ul>
+                    <li><strong>G</strong>: The Initial Graph Structure</li>
+                    <li><strong>d_g</strong>: Graph Dimensions</li>
+                    <li><strong>d_a</strong>: Array Dimensions</li>
+                    <li><strong>VC</strong>: Vertex of Colors (key being the nodeID and value being the color)</li>
+                    <li><strong>W</strong>: Weights of Edges</li>
+                    <li><strong>EC</strong>: Edge colors (key being the edgeID and value being the color)</li>
+                </ul>
+                <li>Edges are added using <code>AddEdge(node1, node2)</code> if the nodes don’t already have an edge.</li>
+            </ul>
+        ),
+        filterText: (
+            <ul>
+            <li>Graph is filtered by NodeIDS through the in-built SNAP function <strong>GetSubGraph (node_ids)</strong></li>
+            <ul>
+                <li><strong>GetSubGraph</strong> extracts and creates a new Graph based on the NodeIDS and their edges provided by the graph(G).</li>
+                <li>Example: <strong>subgraph = self.G.GetSubGraph (node_ids) </strong></li>
+            </ul>
+            </ul>
+        ),
+        bfsText: (
+            <ul>
+            <li>An interface, green vertex, is connected to the bottom boundary of the graph.</li>
+            <ul>
+                <li>Creates a <strong>Hash table (TIntH in SNAP) </strong> that will store parent nodes for each node visited during the BFS travel. The key will be the NodeID and the value will be its parent node.</li>
+                <li>Performs BFS using <strong>self.G.GetBfsTree (source, True, False)</strong>, which performs BFS starting from the source node on the graph, G.</li>
+                <li>Calculates the path from the source node to every other node and is stored in the Hashtable.</li>
+                <li>Finds the path from the source node to the destination node using the Hash table.</li>
+            </ul>
+            </ul>
+        ),
+        graphCode: snapCode,
+        filterCode: snapFiltering,
+        bfsCode: snapBFS,
+        github: "https://github.com/8michael8/GraSPI_SNAP/tree/master"
     },
     {
         img: igraph,
@@ -232,7 +269,11 @@ const graphCreation = (libraryName) => {
         header: "igraph",
         algoText: "Testing2",
         filterText: "CCCCCCCcc",
-        bfsText: "3333333"
+        bfsText: "3333333",
+        github: "https://github.com/wenqizheng326/graspi_igraph",
+        graphCode: igraphGraph,
+        filterCode: igraphFilter,
+        bfsCode: igraphBFS
     },
     {
         img: rustworkx,
@@ -240,7 +281,11 @@ const graphCreation = (libraryName) => {
         header: "rustworkx",
         algoText: "Testing3",
         filterText: "BBBBB",
-        bfsText: "2222222222"
+        bfsText: "2222222222",
+        github: "https://github.com/jzzhou03/material-microstructure-rustworkx",
+        graphCode: rustGraph,
+        filterCode: rustFilter,
+        bfsCode: rustBFS
     },
     {
         img: graphtool,
@@ -255,7 +300,19 @@ const graphCreation = (libraryName) => {
 
   return (
     <>
+
       <div className="homePage">
+        <div className={`${loading ? 'loadingScreen' : 'loadingScreen2'}`}>
+        <div class="l1"></div>
+        <div class="l2"></div>
+        <div class="l3"></div>
+        <div class="l4"></div>
+        <div class="l5"></div>
+        <div class="l6"></div>
+        <div class="l7"></div>
+        <div class="l8"></div>
+        <h1 className="loading"> LOADING </h1>
+        </div>
         <div className="title">
           <h1 className="t1">Gra<span>ph-based</span></h1>
           <h1 className="t2">S<span>tructure</span></h1>
@@ -285,6 +342,7 @@ const graphCreation = (libraryName) => {
         <div className="libraries" >
                     {libraries.map((library, index) => (
             <div key={index} className={`lib ${library.header.toLowerCase()}`} onClick={() => libTransition(library)}>
+                <a className = "githubIcon" href={library.github} target="_blank"><i class="fab fa-github"></i></a>
                 <img src={library.img} alt={library.header} className="libPic"/>
             </div>
         ))}
@@ -325,7 +383,7 @@ const graphCreation = (libraryName) => {
                 }}>
                     &#x2190;
                 </button>
-                <button onClick={() => graphCreation(popupContent.header)}>Generate SNAP Graph</button>
+                <button className="graphButton" onClick={() => graphCreation(popupContent.header, currentSlide)}>Generate Graph</button>
         <img
             src={popupContent.graphCode}
             alt=""
@@ -355,6 +413,17 @@ const graphCreation = (libraryName) => {
             >
                      &#x2190;
                 </button>
+                <button className="graphButton" onClick={() => graphCreation(popupContent.header, currentSlide)}>Generate Filter</button>
+        <img
+            src={popupContent.filterCode}
+            alt=""
+            className="popup-img2"
+            style={{ opacity: generatedImage ? 0 : 1 }}
+        />
+            {generatedImage && (
+                <img src={generatedImage} alt="Generated Graph" className="graphImage" />
+            )}
+
             </>
         )}
 
@@ -376,6 +445,20 @@ const graphCreation = (libraryName) => {
             >
                      &#x2190;
                 </button>
+                <button className="graphButton" onClick={() => graphCreation(popupContent.header, currentSlide)}>Generate Paths</button>
+        <img
+            src={popupContent.bfsCode}
+            alt=""
+            className="popup-img2"
+            style={{ opacity: generatedImage ? 0 : 1 }}
+         />
+          {path && Object.keys(path).length > 0 && (
+            <div className="bfsPath">
+                <button onClick={downloadPathsAsText}>Download Paths as Text</button>
+            </div>
+        )}
+
+
             </>
         )}
 
