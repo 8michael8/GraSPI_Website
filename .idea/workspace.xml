@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="32bbcab8-b904-4cb7-9ec6-8b8b957a3c70" name="Changes" comment="" />
+    <list default="true" id="32bbcab8-b904-4cb7-9ec6-8b8b957a3c70" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/PIL/_tkinter_finder.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/PIL/_tkinter_finder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/PIL/features.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/PIL/features.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,11 +49,11 @@
       <recent name="C:\Users\manla\PycharmProjects\GraSPI Website\frontend\client\src\graphs" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\manla\PycharmProjects\GraSPI Website\frontend" />
       <recent name="C:\Users\manla\PycharmProjects\GraSPI Website\frontend\client\src\images" />
       <recent name="C:\Users\manla\PycharmProjects\GraSPI Website" />
       <recent name="C:\Users\manla\PycharmProjects\GraSPI Website\frontend\client\src" />
       <recent name="C:\Users\manla\PycharmProjects\GraSPI Website\static\images" />
-      <recent name="C:\Users\manla\PycharmProjects\GraSPI Website\static\graphs" />
     </key>
   </component>
   <component name="SharedIndexes">
