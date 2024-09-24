@@ -1,8 +1,12 @@
 {
-  "dependencies": {
-    "gsap": "^3.12.5"
+  "name": "GraSPI Website",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+     "start": "waitress-serve --port=$PORT app:app",
+    "heroku-postbuild": "cd frontend && cd client && npm install && npm run build"
   },
   "devDependencies": {
-    "tailwindcss": "^3.4.12"
+    "concurrently": "^6.0.0"
   }
 }
