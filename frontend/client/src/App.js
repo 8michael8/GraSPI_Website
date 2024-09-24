@@ -277,17 +277,78 @@ const downloadPathsAsText = () => {
         img: rustworkx,
         text: "rustworkx is a Python package for working with graphs and complex networks. It enables the creation, interaction with, and study of graphs and networks.",
         header: "rustworkx",
-        algoText: "Testing3",
-        filterText: "BBBBB",
-        bfsText: "2222222222",
+        algoText: (
+            <ul>
+                <li>Graphs are generated using the <code>createGraph(filename, cathode)</code> function.</li>
+                <li>Parameters:</li>
+                <ul>
+                    <li><strong>filename</strong>: The name of the file for input</li>
+                    <li><strong>cathode</strong>: A boolean to determine if a cathode/interface node should be created
+                    </li>
+                </ul>
+                <li>Nodes are added using <code>add_node(obj)</code></li>
+                <ul>
+                    <li><strong>obj</strong>: Inputs a custom node object that stores a label, color, x, y, z</li>
+                </ul>
+                <li>Edges are added using <code>add_edge(node_a, node_b, obj)</code>
+                    <ul>
+                        <li><strong>node_a</strong>: The parent node</li>
+                        <li><strong>node_b</strong>: The child node</li>
+                        <li><strong>obj</strong>: Inputs a custom edge object that stores the connecting node objects and
+                            weight of the edge
+                        </li>
+                    </ul>
+                </li>
+                <li>A PyGraph object is returned of the created graph</li>
+            </ul>
+        ),
+        filterText: (
+            <ul>
+            <li>Graph is filtered by the <code>filterGraph(g, visualize)</code> function</li>
+                <li>Parameters:</li>
+                <ul>
+                    <li><strong>g</strong>: The graph that will be filtered</li>
+                    <li><strong>visualize</strong>: A boolean to determine if a visualization is created</li>
+                </ul>
+                <li>Relies mainly on the built in function <code>filter_edges(filter_function)</code></li>
+                <ul>
+                    <li><strong>filter_function</strong>: A function that determines how edges will be filtered</li>
+                    <li><code>connectedComponents</code> is the filtering function created to only select edges between
+                        two nodes with the same color
+                    </li>
+                </ul>
+                <li>Returns a PyGraph object of the filtered graph</li>
+            </ul>
+        ),
+        bfsText: (
+            <ul>
+                <li>The shortest path is created by the <code>shortestPath(g)</code> function</li>
+                <li>Parameters:</li>
+                <ul>
+                    <li><strong>g</strong>: The graph that the shortest path algorithm will be ran on</li>
+                    <ul>
+                        <li>This graph should be a filtered graph with a cathode node</li>
+                    </ul>
+                </ul>
+                <li>Relies on the built in function <code>dijkstra_shortest_paths(g, cathode)</code></li>
+                <ul>
+                    <li><strong>g</strong>: The graph that the shortest path will be run on</li>
+                    <ul>
+                        <li>In this case, it is a filtered graph with a cathode</li>
+                    </ul>
+                    <li><strong>cathode</strong>: The starting node that will find paths to all other nodes</li>
+                </ul>
+                <li>Will return a dictionary of the shortest paths for each possible node</li>
+            </ul>
+        ),
         github: "https://github.com/jzzhou03/material-microstructure-rustworkx",
         graphCode: rustGraph,
         filterCode: rustFilter,
         bfsCode: rustBFS
     },
-    {
-        img: graphtool,
-        text: "Graph-tool is an efficient Python module for manipulation and statistical analysis of graphs (a.k.a. networks). Contrary to most other Python modules with similar functionality, the core data structures and algorithms are implemented in C++, making extensive use of template metaprogramming, based heavily on the Boost Graph Library. This confers it a level of performance that is comparable (both in memory usage and computation time) to that of a pure C/C++ library.",
+      {
+          img: graphtool,
+          text: "Graph-tool is an efficient Python module for manipulation and statistical analysis of graphs (a.k.a. networks). Contrary to most other Python modules with similar functionality, the core data structures and algorithms are implemented in C++, making extensive use of template metaprogramming, based heavily on the Boost Graph Library. This confers it a level of performance that is comparable (both in memory usage and computation time) to that of a pure C/C++ library.",
         header: "graphtool",
         algoText: "Testing4",
         filterText: "AAAAAAAA",

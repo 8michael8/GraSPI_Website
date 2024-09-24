@@ -1,8 +1,8 @@
 from flask import Flask, send_from_directory, jsonify
 import os
 #SNAP
-from graph2d import runSnap
 from graph2dIGraph import runIgraph
+from graph2dRustWork import runRust
 
 app = Flask(__name__, static_folder='frontend/client/build', static_url_path='/')
 
@@ -14,11 +14,18 @@ def create_graph(library_name, graph_type):
     image_path = None
     if library_name == "snap":
         if graph_type == 'bfs':
-            path = runSnap(graph_type)
+            # path = runSnap(graph_type)
+            return
         else:
-            runSnap(graph_type)
+            # runSnap(graph_type)
+            return
     elif library_name == "igraph":
         runIgraph(graph_type)
+    elif library_name == "rustworkx":
+        if graph_type == 'bfs':
+            path = runRust(graph_type)
+        else:
+            runRust(graph_type)
 
     if path:
         return jsonify({'path': path})
