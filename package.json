@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-     "start": "waitress-serve --port=$PORT app:app",
+    "start": "waitress-serve --port=$PORT app:app",
     "heroku-postbuild": "cd frontend && cd client && npm install && npm run build"
   },
   "devDependencies": {
     "concurrently": "^6.0.0"
+  },
+  "dependencies": {
+    "gsap": "^3.12.5"
   }
 }
