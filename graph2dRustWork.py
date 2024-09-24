@@ -174,8 +174,6 @@ def filterGraph(g, visualize, output):
         node2 = int(g.get_edge_data_by_index(edge).node2.label)
         edgeList.append( (node1, node2) )
 
-    print(edgeList)
-
     filteredGraph = g.edge_subgraph(edgeList)
 
     if visualize:
@@ -215,7 +213,6 @@ def shortest_path(g):
     all_paths = dijkstra_shortest_paths(g, cathode)
     paths = {}
     for node in all_paths.keys():
-        print(g.get_node_data(node).color)
         if g.get_node_data(node).color == 0:
             paths[node] = list(all_paths[node])
     return paths
