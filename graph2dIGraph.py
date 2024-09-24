@@ -157,7 +157,7 @@ def visual3D(g, fileName):
         ax.text(x, y, z, str(i), color='black')
 
     plt.savefig(fileName)
-    plt.show()
+    #plt.show()
 
 
 '''********* Filtering the Graph **********'''
@@ -215,4 +215,3 @@ def runIgraph(type):
         return path
 
     return 0
-

@@ -182,7 +182,9 @@ const graphCreation = (libraryName, type) => {
     .then(response => response.json())
     .then(data => {
         setLoading(false);
+        console.log(data.path)
         if (typeof data.path === 'object' && !Array.isArray(data.path)) {
+            console.log("AAAAA");
             setPath(data.path);
         } else if (typeof data.image_path === "string") {
             setGeneratedImage(data.image_path);
