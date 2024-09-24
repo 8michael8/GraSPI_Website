@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="32bbcab8-b904-4cb7-9ec6-8b8b957a3c70" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/client/src/images/gt_bfs.JPG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/client/src/images/gt_creation.JPG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/client/src/images/gt_filter.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rustworkxKM.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/client/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/client/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

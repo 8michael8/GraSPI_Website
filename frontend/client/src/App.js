@@ -386,9 +386,27 @@ algoText: (
         img: graphtool,
         text: "Graph-tool is an efficient Python module for manipulation and statistical analysis of graphs (a.k.a. networks). Contrary to most other Python modules with similar functionality, the core data structures and algorithms are implemented in C++, making extensive use of template metaprogramming, based heavily on the Boost Graph Library. This confers it a level of performance that is comparable (both in memory usage and computation time) to that of a pure C/C++ library.",
         header: "graphtool",
-        algoText: "",
-        filterText: "",
-        bfsText: "",
+         algoText: (
+            <ul>
+                <li>Graphs are generated using the graph-tool function.</li>
+                <li>Each number corresponds to a node index.</li>
+                <li>Index 0 represents the bottom connection, and index 1 the top connection.</li>
+                <li>This is a 10x10 structure, with every edge printed.</li>
+            </ul>
+        ),
+        filterText: (
+            <ul>
+                <li>Graph is filtered by GraphView through the in-built graph-tool function.</li>
+                <li>It is supported by two other functions, edge_filter and vertex_filter.</li>
+                <li>These helper functions determine what is being excluded.</li>
+                <li>The GraphView also helps create this filtered graph as an entirely new graph on its own.</li>
+            </ul>
+        ),
+        bfsText: (
+            <ul>
+                <li>This BFS implementation starts at the bottom node, which is represented by 0. Graph-Tool uses an in-built function that uses a helper function called BFSVisitor. This helper function also determines what parameters to set when searching. The image here, represents all the paths from each node starting from node 0. It is doing this search on a filtered graph, so half of the nodes do not have a pathing.</li>
+            </ul>
+        ),
         github: "https://github.com/gobrin111/graph-tool-testing"
     }
 ];
@@ -480,8 +498,11 @@ algoText: (
                     &#x2190;
                 </button>
                 <button className="graphButton" onClick={() => graphCreation(popupContent.header, currentSlide)}>Generate Graph</button>
+                 {popupContent.header === "rustworkx" && (
+                    <button className="graphButtonK" onClick={() => graphCreation("rustworkxK", currentSlide)}>Generate Graph (K)</button>
+                 )}
 {popupContent.header === "graphtool" ?
-                    <img src={gt_creation} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:650}}/>
+                    <img src={gt_creation} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:500, left: 50}}/>
                     :
                     <img src={popupContent.graphCode} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1}}/>
                 }
@@ -494,7 +515,7 @@ algoText: (
             <>
                 <h1 className="popup-h">Filtering</h1>
                 <p className="popup-algo">{popupContent.filterText}</p>
-                 {popupContent.header === "graphtool" && <img src={gt_filter} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:650}}/>}
+                 {popupContent.header === "graphtool" && <img src={gt_filter} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:500, left: 50}}/>}
                 <button className="next-button" onClick={() => {
                     setCurrentSlide('bfs'); // Change to graph slide
                     setGeneratedImage(null);  // Reset generated image
@@ -510,6 +531,9 @@ algoText: (
                      &#x2190;
                 </button>
                 <button className="graphButton" onClick={() => graphCreation(popupContent.header, currentSlide)}>Generate Filter</button>
+                 {popupContent.header === "rustworkx" && (
+                    <button className="graphButtonK" onClick={() => graphCreation("rustworkxK", currentSlide)}>Generate Graph (K)</button>
+                 )}
         <img
             src={popupContent.filterCode}
             alt=""
@@ -527,7 +551,7 @@ algoText: (
             <>
                 <h1 className="popup-h">BFS</h1>
                 <p className="popup-algo">{popupContent.bfsText}</p>
-                {popupContent.header === "graphtool" && <img src={gt_bfs} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:650}}/>}
+                {popupContent.header === "graphtool" && <img src={gt_bfs} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:500, left: 50}}/>}
                 <button className="next-button" onClick={() => {
                     setCurrentSlide('intro'); // Change to graph slide
                     setGeneratedImage(null);  // Reset generated image

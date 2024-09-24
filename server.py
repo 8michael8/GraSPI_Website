@@ -4,8 +4,10 @@ import os
 from graph2d import runSnap
 #igraph
 from graph2dIGraph import runIgraph
-#rustworkx
+#rustworkx (Jerry)
 from graph2dRustWork import runRust
+#rustworkx (Kevin)
+from rustworkxKM import run_rustworkxKM
 
 app = Flask(__name__, static_folder='frontend/client/build', static_url_path='/')
 
@@ -27,8 +29,11 @@ def create_graph(library_name, graph_type):
     elif library_name == "rustworkx":
         if graph_type == 'bfs':
             path = runRust(graph_type)
+    elif library_name == "rustworkxK":
+        if graph_type == 'bfs':
+            path = run_rustworkxKM(graph_type)
         else:
-            runRust(graph_type)
+            run_rustworkxKM(graph_type)
 
     if path:
         return jsonify({'path': path})

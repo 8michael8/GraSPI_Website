@@ -224,6 +224,12 @@ svg {
     left:18%;
 }
 
+.graphButtonK {
+    position: absolute;
+    top: 90%;
+    left:18%;
+}
+
 .bfsPath {
     position: absolute;
     top: 90%;
@@ -389,6 +395,8 @@ svg {
         transform: rotate(360deg) translateX(5vw) rotate(-360deg);
     }
 }
+
+
 
 .githubIcon {
   color: black;
