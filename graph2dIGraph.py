@@ -1,9 +1,9 @@
-#import matplotlib
-#matplotlib.use('Agg')  # Use a non-interactive backend for rendering
+import matplotlib
+matplotlib.use('Agg')  # Use a non-interactive backend for rendering
 
 import igraph as ig
-#import matplotlib.pyplot as plt
-#from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 
 '''---------Function to create edges for graph in specified format --------'''
@@ -157,7 +157,7 @@ def visual3D(g, fileName):
         ax.text(x, y, z, str(i), color='black')
 
     plt.savefig(fileName)
-    #plt.show()
+    plt.show()
 
 
 '''********* Filtering the Graph **********'''

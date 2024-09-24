@@ -1,7 +1,7 @@
 import rustworkx as rx
 import math
 import graphviz
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import time
 
 from rustworkx import *
