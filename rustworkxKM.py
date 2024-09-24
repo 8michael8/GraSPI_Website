@@ -1,37 +1,13 @@
-import tracemalloc
-from dataclasses import dataclass
-from inspect import trace
-from os import times
-from turtledemo.penrose import start
-
 import rustworkx as rx
 import math
 from rustworkx import dijkstra_shortest_paths
 from rustworkx.visualization import graphviz_draw
-import time
 import os
-
-# from src.dict_csv_test import mydict
 
 os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz/bin'
 
 from rustworkx.visit import BFSVisitor, DijkstraVisitor
 from rustworkx.visit import DFSVisitor
-
-import csv
-
-test = "tests/test.txt"
-file10 = "tests/10x10.txt"
-file50 = "tests/test50.txt"
-file100 = "tests/test100.txt"
-file500 = "tests/test500.txt"
-file1000 = "tests/test1000.txt"
-file_list = [file10, file50, file100, file500, file1000]
-image = ["images/rustwork10x10.jpg", "images/rustwork50x50.jpg", "images/rustwork100x100.jpg", "images/rustwork500x500.jpg", "images/rustwork1000x1000.jpg"]
-filtered_image = ["filtered_images/filtered_rustwork10x10.jpg", "filtered_images/filtered_rustwork50x50.jpg", "filtered_images/filtered_rustwork100x100.jpg", "filtered_images/filtered_rustwork500x500.jpg", "filtered_images/filtered_rustwork1000x1000.jpg"]
-file3D10 = "tests/10x10x10.txt"
-file3D50 = "tests/50x50x50.txt"
-file3D100 = "tests/100x100x100.txt"
 
 class TreeEdgesRecorderDfs(DFSVisitor):
 
@@ -65,10 +41,8 @@ class Edge:
         self.node2 = node2
         self.weight = weight
 
-graph = rx.PyGraph()
-#filterGraph = rx.PyGraph
-
 def createGraph(filename):
+    graph = rx.PyGraph()
     with open(filename, "r") as f:
         lines = f.readlines()
         header = lines[0].split()
@@ -84,35 +58,37 @@ def createGraph(filename):
         prevNode = None
 
         line_idx = 1
-        # Graph creation
 
+        # Graph creation
         for z in range(dimZ):
             for y in range(dimY):
                 line = lines[line_idx].strip().split(" ")
                 line_idx += 1
                 for x in range(dimX):
-                    node = graph.add_node(Node((z * dimX * dimY) + (y * dimX) + x, int(line[x]), x, y, z))
+                    nodeObj = Node((z * dimX * dimY) + (y * dimX) + x, int(line[x]), x, y, z)
+                    node = graph.add_node(nodeObj)
+                    nodeObj.label = node
                     currRow[x] = node
                     currLayer[y][x] = node
 
                     # Left of the node
                     if prevNode != None:
-                        graph.add_edge(node, prevNode, Edge(node, prevNode, 1))
+                        graph.add_edge(node, prevNode, Edge(nodeObj, graph.get_node_data(prevNode), 1))
 
                     # Down of the node
                     if prevRow[x] != None:
-                        graph.add_edge(node, prevRow[x], Edge(node, prevRow[x], 1))
+                        graph.add_edge(node, prevRow[x], Edge(nodeObj, graph.get_node_data(prevRow[x]), 1))
 
                     if (prevLayer[y][x] != None):
-                        graph.add_edge(node, prevLayer[y][x], Edge(node, prevLayer[y][x], 1))
+                        graph.add_edge(node, prevLayer[y][x], Edge(nodeObj, graph.get_node_data(prevLayer[y][x]), 1))
 
                     # Southeast of the node
                     if (x + 1 < dimX) and (prevRow[x + 1] != None):
-                        graph.add_edge(node, prevRow[x + 1], Edge(node, prevRow[x + 1], math.sqrt(2)))
+                        graph.add_edge(node, prevRow[x + 1], Edge(nodeObj, graph.get_node_data(prevRow[x + 1]), math.sqrt(2)))
 
                     # Southwest of the node
                     if (x - 1 >= 0) and (prevRow[x - 1] != None):
-                        graph.add_edge(node, prevRow[x - 1], Edge(node, prevRow[x - 1], math.sqrt(2)))
+                        graph.add_edge(node, prevRow[x - 1], Edge(nodeObj, graph.get_node_data(prevRow[x - 1]), math.sqrt(2)))
 
                     # Checks if the node isn't the last node on the line
                     if (x < dimX - 1):
@@ -123,17 +99,18 @@ def createGraph(filename):
                 prevRow, currRow = currRow, [None] * dimX
 
             prevLayer, currLayer = currLayer, [[None] * dimX for i in range(dimY)]
-    add_cathode_node(dimX, dimY, dimZ)
+
+        add_cathode_node(graph, dimX, dimY, dimZ)
     return graph
 
 
-def add_cathode_node(dimX,dimY,dimZ):
-    node = graph.add_node(Node("Interface", 2,0,0,0))
-    currNodes = graph.node_indices()
-
+def add_cathode_node(g, dimX,dimY,dimZ):
+    cathodeObj = Node(g.num_nodes(), 2, 0, 0, 0)
+    cathode = g.add_node(cathodeObj)
+    currNodes = g.node_indices()
     for z in range(dimZ):
         for x in range(dimX):
-            graph.add_edge(node, currNodes[z * dimX * x], Edge(node, currNodes[z * dimX + x], 1))
+            g.add_edge(cathode, currNodes[z * dimX + x], Edge(cathodeObj, g.get_node_data(currNodes[z * dimX + x]), 1))
 
 def node_attr_fn(node):
     attr_dict = {
@@ -157,55 +134,30 @@ def node_attr_fn(node):
         attr_dict["fillcolor"] = "white"
     return attr_dict
 
-def visualizeGraphMPL(g):
-    for node in graph.node_indices():
-        graph[node] = node
-    graphviz_draw(graph, node_attr_fn=node_attr_fn, method ="neato")
-
 def visualizeGraphGV(g, file):
     graph_dict = {}
     graphviz_draw(g, filename=file, node_attr_fn=node_attr_fn,
                   graph_attr=graph_dict, method ="neato")
 
-
-def testGraphRunTime(filename, visualize, graphVisualFileName):
-    if visualize:
-        createGraph(filename)
-        visualizeGraphGV(graph, graphVisualFileName)
-    else:
-        createGraph(filename)
-
-
-
 def connectedComponents(edge):
-    node1 = graph.get_node_data(edge.node1)
-    node2 = graph.get_node_data(edge.node2)
-
-    # Checks if the edge between the two nodes have different colors
-    if (node1.color == 0 and node2.color == 1) or (node1.color == 1 and node2.color == 0):
+    if ((edge.node1.color == 0 and edge.node2.color == 1) or (edge.node1.color == 1 and edge.node2.color == 0)):
         return False
     return True
 
 
 def filterGraph(g, visualize, filteredImageFile):
-    global filteredGraph
-
     edges = g.filter_edges(connectedComponents)
 
     edgeList = []
     for edge in edges:
-        node1 = g.get_edge_data_by_index(edge).node1
-        node2 = g.get_edge_data_by_index(edge).node2
+        node1 = g.get_edge_data_by_index(edge).node1.label
+        node2 = g.get_edge_data_by_index(edge).node2.label
         edgeList.append( (node1, node2) )
 
     filteredGraph = g.edge_subgraph(edgeList)
     if visualize:
         visualizeGraphGV(filteredGraph, filteredImageFile)
     return edges
-
-def testFilterGraph(g, filename, visualize,  filteredFileName):
-    #createGraph(filename)
-    filterGraph(g, visualize, filteredFileName)
 
 #Uses DFS to traverse graph and print's all edges reachable from source node
 def dfs(g, source):
@@ -254,23 +206,26 @@ def run_rustworkxKM(type):
     print("Generating Graph...")
     file = "./testCases/10x10.txt"
     if type == "graph":
-        createGraph(file)
+        graph = createGraph(file)
         visualizeGraphGV(graph, output_file)
         return 0
     elif type == "filtered":
-        createGraph(file)
+        graph = createGraph(file)
         filterGraph(graph, True, output_file)
         return 0
     elif type == "bfs":
-        createGraph(file)
+        graph = createGraph(file)
         filterGraph(graph, False, output_file)
         paths = shortest_path_all_nodes(graph)
+        # print(paths)
         return paths
 
 
 
 # Defining main function
 def main():
+    run_rustworkxKM("graph")
+    run_rustworkxKM("filtered")
     run_rustworkxKM("bfs")
 
 if __name__=="__main__":
