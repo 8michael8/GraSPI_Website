@@ -2,7 +2,7 @@ import tracemalloc
 from dataclasses import dataclass
 from inspect import trace
 from os import times
-from turtledemo.penrose import start
+#from turtledemo.penrose import start
 
 import rustworkx as rx
 import math
