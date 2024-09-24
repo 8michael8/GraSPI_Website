@@ -1,8 +1,5 @@
 from flask import Flask, send_from_directory, jsonify
 import os
-import matplotlib
-matplotlib.use('Agg')
-
 #SNAP
 from graph2d import runSnap
 #igraph
@@ -12,7 +9,10 @@ from graph2dRustWork import runRust
 #rustworkx (Kevin)
 from rustworkxKM import run_rustworkxKM
 
+from flask_cors import CORS
+
 app = Flask(__name__, static_folder='frontend/client/build', static_url_path='/')
+CORS(app)
 
 
 @app.route('/create/<library_name>/<graph_type>', methods=['POST'])
@@ -22,11 +22,9 @@ def create_graph(library_name, graph_type):
     image_path = None
     if library_name == "snap":
         if graph_type == 'bfs':
-            # path = runSnap(graph_type)
-            return
+            path = runSnap(graph_type)
         else:
-            # runSnap(graph_type)
-            return
+            runSnap(graph_type)
     elif library_name == "igraph":
         runIgraph(graph_type)
     elif library_name == "rustworkx":
@@ -59,5 +57,4 @@ def serve(path):
         return send_from_directory(app.static_folder, "index.html")
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=os.getenv('PORT', 5000))
-
+    app.run(debug=True)
