@@ -202,7 +202,7 @@ def filterGraph(g, visualize, filteredImageFile):
     return edges
 
 def testFilterGraph(g, filename, visualize,  filteredFileName):
-    createGraph(filename)
+    #createGraph(filename)
     filterGraph(g, visualize, filteredFileName)
 
 #Uses DFS to traverse graph and print's all edges reachable from source node

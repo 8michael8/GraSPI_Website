@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="32bbcab8-b904-4cb7-9ec6-8b8b957a3c70" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/client/src/graph/rustworkxKfilter.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/client/src/graph/rustworkxKgraph.png" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/rustworkxKM.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/client/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/client/src/App.css" afterDir="false" />
