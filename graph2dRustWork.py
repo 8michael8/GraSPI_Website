@@ -1,3 +1,6 @@
+import matplotlib
+matplotlib.use('Agg')  # Use a headless backend for rendering
+
 import rustworkx as rx
 import math
 import graphviz
@@ -113,7 +116,7 @@ def add_cathode_node(g,dimX,dimY,dimZ):
 
 def visualizeGraphMPL(g):
     rx.visualization.mpl_draw(g)
-    plt.show()
+    #plt.show()
 
 def node_attr_fn(node):
     attr_dict = {

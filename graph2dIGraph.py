@@ -1,3 +1,6 @@
+import matplotlib
+matplotlib.use('Agg')  # Use a non-interactive backend for rendering
+
 import igraph as ig
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -154,7 +157,7 @@ def visual3D(g, fileName):
         ax.text(x, y, z, str(i), color='black')
 
     plt.savefig(fileName)
-    plt.show()
+    #plt.show()
 
 
 '''********* Filtering the Graph **********'''
