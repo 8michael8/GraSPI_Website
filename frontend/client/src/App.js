@@ -267,9 +267,41 @@ const downloadPathsAsText = () => {
         img: igraph,
         text: "igraph is a collection of network analysis tools with the emphasis on efficiency, portability, and ease of use. igraph is open source and free. igraph can be programmed in R, Python, Mathematica, and C/C++.",
         header: "igraph",
-        algoText: "Testing2",
-        filterText: "CCCCCCCcc",
-        bfsText: "3333333",
+        algoText: (
+            <ul>
+                <li>Graphs are generated using the <code>generateGraph(file)</code> which takes in a input file name. The function which uses igraph's built-in function <strong>igraph.Graph()</strong></li>
+                <li>igraph.Graph takes in parameters:</li>
+                <ul>
+                    <li><strong>n</strong>: number of vertices</li>
+                    <li><strong>edges</strong>: lists of edges</li>
+                    <li><strong>directed</strong>: true or false if graph is directed</li>
+                    <li><strong>vertex_attrs</strong>: list of vertex colors or attributes</li>
+                </ul>
+                <li>Edges are added using <strong>edge(file)</strong> within the generateGraph function</li>
+                <li>The vertex attributes are generated via <strong>vertexColors(file)</strong></li>
+            </ul>
+        ),
+        filterText: (
+            <ul>
+            <li>filterGraph(graph) filters a graph by using the in-built igraph function <strong>subgraph_edges(edgesList, delete_vertices)</strong></li>
+            <ul>
+                <li><strong>subgraph_edges(edgesList, delete_vertices)</strong> takes in the parameters: list of edges, if vertices get deleted delete_vertices takes true or false.</li>
+                <li>Subgraphs are generated based on if the neighbors of the current vertex is the same color, then the connecting edge is kept, if not, it's removed. Thus, this filters the graph by having connected components where each subgraph is one color.</li>
+                <li>Example: <strong>filtered_graph = filterGraph(graph) </strong></li>
+                <li style="text-indent: 20px;">graph is a graph generated via igraph</li>
+            </ul>
+            </ul>
+        ),
+        bfsText: (
+            <ul>
+            <li>An interface, green vertex, is connected to the bottom boundary of the graph.</li>
+            <ul>
+                <li>Edges are added to the existing graph via <strong>graph.add_edges(edges)</strong></li>
+                <li>The shortest path is determined between the green vertex and all the black vertices until the white vertices are reached via <strong>shortest_path(graph,file)</strong> which takes in a graph created by igraph</li>
+                <li><strong>shortest_path(graph,file)</strong> utilizes igraph's built-in function <strong>graph.get_shortest_paths(start,end)</strong> which returns the path of vertices between start and end vertice</li>
+            </ul>
+            </ul>
+        ),
         github: "https://github.com/wenqizheng326/graspi_igraph",
         graphCode: igraphGraph,
         filterCode: igraphFilter,
