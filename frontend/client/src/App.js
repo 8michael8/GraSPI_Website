@@ -14,6 +14,9 @@ import rustBFS from './images/rustworkxBFS.png'
 import igraphGraph from './images/igraphGraph.png'
 import igraphFilter from './images/igraphFilter.png'
 import igraphBFS from './images/igraphBFS.png'
+import gt_creation from './images/gt_creation.JPG'
+import gt_filter from './images/gt_filter.JPG'
+import gt_bfs from './images/gt_bfs.JPG'
 
 function App() {
     const animation = gsap.timeline();
@@ -383,9 +386,9 @@ algoText: (
         img: graphtool,
         text: "Graph-tool is an efficient Python module for manipulation and statistical analysis of graphs (a.k.a. networks). Contrary to most other Python modules with similar functionality, the core data structures and algorithms are implemented in C++, making extensive use of template metaprogramming, based heavily on the Boost Graph Library. This confers it a level of performance that is comparable (both in memory usage and computation time) to that of a pure C/C++ library.",
         header: "graphtool",
-        algoText: "Testing4",
-        filterText: "AAAAAAAA",
-        bfsText: "1111111",
+        algoText: "",
+        filterText: "",
+        bfsText: "",
         github: "https://github.com/gobrin111/graph-tool-testing"
     }
 ];
@@ -477,12 +480,11 @@ algoText: (
                     &#x2190;
                 </button>
                 <button className="graphButton" onClick={() => graphCreation(popupContent.header, currentSlide)}>Generate Graph</button>
-        <img
-            src={popupContent.graphCode}
-            alt=""
-            className="popup-img2"
-            style={{ opacity: generatedImage ? 0 : 1 }}
-        />
+{popupContent.header === "graphtool" ?
+                    <img src={gt_creation} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:650}}/>
+                    :
+                    <img src={popupContent.graphCode} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1}}/>
+                }
             {generatedImage && (
                 <img src={generatedImage} alt="Generated Graph" className="graphImage" />
             )}
@@ -492,6 +494,7 @@ algoText: (
             <>
                 <h1 className="popup-h">Filtering</h1>
                 <p className="popup-algo">{popupContent.filterText}</p>
+                 {popupContent.header === "graphtool" && <img src={gt_filter} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:650}}/>}
                 <button className="next-button" onClick={() => {
                     setCurrentSlide('bfs'); // Change to graph slide
                     setGeneratedImage(null);  // Reset generated image
@@ -524,6 +527,7 @@ algoText: (
             <>
                 <h1 className="popup-h">BFS</h1>
                 <p className="popup-algo">{popupContent.bfsText}</p>
+                {popupContent.header === "graphtool" && <img src={gt_bfs} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:650}}/>}
                 <button className="next-button" onClick={() => {
                     setCurrentSlide('intro'); // Change to graph slide
                     setGeneratedImage(null);  // Reset generated image
