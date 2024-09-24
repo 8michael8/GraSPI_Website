@@ -14,6 +14,10 @@ import rustBFS from './images/rustworkxBFS.png'
 import igraphGraph from './images/igraphGraph.png'
 import igraphFilter from './images/igraphFilter.png'
 import igraphBFS from './images/igraphBFS.png'
+/*This is all the images that i changed, I only changed App.js, other changes with the proxy are not needed*/
+import gt_creation from './images/gt_creation.JPG'
+import gt_filter from './images/gt_filter.JPG'
+import gt_bfs from './images/gt_bfs.JPG'
 
 function App() {
     const animation = gsap.timeline();
@@ -382,12 +386,19 @@ const downloadPathsAsText = () => {
                     &#x2190;
                 </button>
                 <button className="graphButton" onClick={() => graphCreation(popupContent.header, currentSlide)}>Generate Graph</button>
-        <img
-            src={popupContent.graphCode}
-            alt=""
-            className="popup-img2"
-            style={{ opacity: generatedImage ? 0 : 1 }}
-        />
+        {/*<img*/}
+        {/*    src={popupContent.graphCode}*/}
+        {/*    alt=""*/}
+        {/*    className="popup-img2"*/}
+        {/*    style={{ opacity: generatedImage ? 0 : 1 }}*/}
+        {/*/>*/}
+                {/*This is for graph-tool graph creation*/}
+                {popupContent.header === "graphtool" ?
+                    <img src={gt_creation} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:800}}/>
+                    :
+                    <img src={popupContent.graphCode} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1}}/>
+                }
+
             {generatedImage && (
                 <img src={generatedImage} alt="Generated Graph" className="graphImage" />
             )}
@@ -397,6 +408,12 @@ const downloadPathsAsText = () => {
             <>
                 <h1 className="popup-h">Filtering</h1>
                 <p className="popup-algo">{popupContent.filterText}</p>
+                {/*This is for graph-tool filtering*/}
+                {popupContent.header === "graphtool" ?
+                    <img src={gt_filter} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:800}}/>
+                    :
+                    <img src={popupContent.graphCode} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1}}/>
+                }
                 <button className="next-button" onClick={() => {
                     setCurrentSlide('bfs'); // Change to graph slide
                     setGeneratedImage(null);  // Reset generated image
@@ -429,6 +446,12 @@ const downloadPathsAsText = () => {
             <>
                 <h1 className="popup-h">BFS</h1>
                 <p className="popup-algo">{popupContent.bfsText}</p>
+                {/*This is for graph-tool bfs*/}
+                {popupContent.header === "graphtool" ?
+                    <img src={gt_bfs} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:800}}/>
+                    :
+                    <img src={popupContent.graphCode} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1}}/>
+                }
                 <button className="next-button" onClick={() => {
                     setCurrentSlide('intro'); // Change to graph slide
                     setGeneratedImage(null);  // Reset generated image
