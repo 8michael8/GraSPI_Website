@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="32bbcab8-b904-4cb7-9ec6-8b8b957a3c70" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/PIL/_tkinter_finder.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/PIL/_tkinter_finder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/PIL/features.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/PIL/features.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/client/src/graph/rustworkxgraph.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pillow-10.4.0.dist-info/RECORD" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/pillow-10.4.0.dist-info/RECORD" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
