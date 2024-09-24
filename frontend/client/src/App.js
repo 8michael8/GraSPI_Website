@@ -168,6 +168,7 @@ const libTransition = (library) => {
         document.body.classList.remove("no-scroll");
             setPopupContent({ img: "", text:"", header: "", algorithmText: "", filterText: "", bfsText: ""});
         setPopupVisible(false);
+        setPath({});
       }
     });
   };
@@ -265,9 +266,41 @@ const downloadPathsAsText = () => {
         img: igraph,
         text: "igraph is a collection of network analysis tools with the emphasis on efficiency, portability, and ease of use. igraph is open source and free. igraph can be programmed in R, Python, Mathematica, and C/C++.",
         header: "igraph",
-        algoText: "Testing2",
-        filterText: "CCCCCCCcc",
-        bfsText: "3333333",
+algoText: (
+            <ul>
+                <li>Graphs are generated using the <code>generateGraph(file)</code> which takes in a input file name. The function which uses igraph's built-in function <strong>igraph.Graph()</strong></li>
+                <li>igraph.Graph takes in parameters:</li>
+                <ul>
+                    <li><strong>n</strong>: number of vertices</li>
+                    <li><strong>edges</strong>: lists of edges</li>
+                    <li><strong>directed</strong>: true or false if graph is directed</li>
+                    <li><strong>vertex_attrs</strong>: list of vertex colors or attributes</li>
+                </ul>
+                <li>Edges are added using <strong>edge(file)</strong> within the generateGraph function</li>
+                <li>The vertex attributes are generated via <strong>vertexColors(file)</strong></li>
+            </ul>
+        ),
+        filterText: (
+            <ul>
+            <li>filterGraph(graph) filters a graph by using the in-built igraph function <strong>subgraph_edges(edgesList, delete_vertices)</strong></li>
+            <ul>
+                <li><strong>subgraph_edges(edgesList, delete_vertices)</strong> takes in the parameters: list of edges, if vertices get deleted delete_vertices takes true or false.</li>
+                <li>Subgraphs are generated based on if the neighbors of the current vertex is the same color, then the connecting edge is kept, if not, it's removed. Thus, this filters the graph by having connected components where each subgraph is one color.</li>
+                <li>Example: <strong>filtered_graph = filterGraph(graph) </strong></li>
+                <li>    graph is a graph generated via igraph</li>
+            </ul>
+            </ul>
+        ),
+        bfsText: (
+            <ul>
+            <li>An interface, green vertex, is connected to the bottom boundary of the graph.</li>
+            <ul>
+                <li>Edges are added to the existing graph via <strong>graph.add_edges(edges)</strong></li>
+                <li>The shortest path is determined between the green vertex and all the black vertices until the white vertices are reached via <strong>shortest_path(graph,file)</strong> which takes in a graph created by igraph</li>
+                <li><strong>shortest_path(graph,file)</strong> utilizes igraph's built-in function <strong>graph.get_shortest_paths(start,end)</strong> which returns the path of vertices between start and end vertice</li>
+            </ul>
+            </ul>
+        ),
         github: "https://github.com/wenqizheng326/graspi_igraph",
         graphCode: igraphGraph,
         filterCode: igraphFilter,
@@ -277,9 +310,70 @@ const downloadPathsAsText = () => {
         img: rustworkx,
         text: "rustworkx is a Python package for working with graphs and complex networks. It enables the creation, interaction with, and study of graphs and networks.",
         header: "rustworkx",
-        algoText: "Testing3",
-        filterText: "BBBBB",
-        bfsText: "2222222222",
+         algoText: (
+            <ul>
+                <li>Graphs are generated using the <code>createGraph(filename, cathode)</code> function.</li>
+                <li>Parameters:</li>
+                <ul>
+                    <li><strong>filename</strong>: The name of the file for input</li>
+                    <li><strong>cathode</strong>: A boolean to determine if a cathode/interface node should be created
+                    </li>
+                </ul>
+                <li>Nodes are added using <code>add_node(obj)</code></li>
+                <ul>
+                    <li><strong>obj</strong>: Inputs a custom node object that stores a label, color, x, y, z</li>
+                </ul>
+                <li>Edges are added using <code>add_edge(node_a, node_b, obj)</code>
+                    <ul>
+                        <li><strong>node_a</strong>: The parent node</li>
+                        <li><strong>node_b</strong>: The child node</li>
+                        <li><strong>obj</strong>: Inputs a custom edge object that stores the connecting node objects and
+                            weight of the edge
+                        </li>
+                    </ul>
+                </li>
+                <li>A PyGraph object is returned of the created graph</li>
+            </ul>
+        ),
+        filterText: (
+            <ul>
+            <li>Graph is filtered by the <code>filterGraph(g, visualize)</code> function</li>
+                <li>Parameters:</li>
+                <ul>
+                    <li><strong>g</strong>: The graph that will be filtered</li>
+                    <li><strong>visualize</strong>: A boolean to determine if a visualization is created</li>
+                </ul>
+                <li>Relies mainly on the built in function <code>filter_edges(filter_function)</code></li>
+                <ul>
+                    <li><strong>filter_function</strong>: A function that determines how edges will be filtered</li>
+                    <li><code>connectedComponents</code> is the filtering function created to only select edges between
+                        two nodes with the same color
+                    </li>
+                </ul>
+                <li>Returns a PyGraph object of the filtered graph</li>
+            </ul>
+        ),
+        bfsText: (
+            <ul>
+                <li>The shortest path is created by the <code>shortestPath(g)</code> function</li>
+                <li>Parameters:</li>
+                <ul>
+                    <li><strong>g</strong>: The graph that the shortest path algorithm will be ran on</li>
+                    <ul>
+                        <li>This graph should be a filtered graph with a cathode node</li>
+                    </ul>
+                </ul>
+                <li>Relies on the built in function <code>dijkstra_shortest_paths(g, cathode)</code></li>
+                <ul>
+                    <li><strong>g</strong>: The graph that the shortest path will be run on</li>
+                    <ul>
+                        <li>In this case, it is a filtered graph with a cathode</li>
+                    </ul>
+                    <li><strong>cathode</strong>: The starting node that will find paths to all other nodes</li>
+                </ul>
+                <li>Will return a dictionary of the shortest paths for each possible node</li>
+            </ul>
+        ),
         github: "https://github.com/jzzhou03/material-microstructure-rustworkx",
         graphCode: rustGraph,
         filterCode: rustFilter,
@@ -291,7 +385,8 @@ const downloadPathsAsText = () => {
         header: "graphtool",
         algoText: "Testing4",
         filterText: "AAAAAAAA",
-        bfsText: "1111111"
+        bfsText: "1111111",
+        github: "https://github.com/gobrin111/graph-tool-testing"
     }
 ];
 
