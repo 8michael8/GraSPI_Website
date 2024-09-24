@@ -1,5 +1,8 @@
 from flask import Flask, send_from_directory, jsonify
 import os
+import matplotlib
+matplotlib.use('Agg')
+
 #SNAP
 from graph2d import runSnap
 #igraph
@@ -56,4 +59,5 @@ def serve(path):
         return send_from_directory(app.static_folder, "index.html")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=os.getenv('PORT', 5000))
+
