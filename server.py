@@ -18,7 +18,10 @@ def create_graph(library_name, graph_type):
         else:
             runSnap(graph_type)
     elif library_name == "igraph":
-        runIgraph(graph_type)
+        if graph_type == 'bfs':
+            path = runIgraph(graph_type)
+        else:
+            runIgraph(graph_type)
 
     if path:
         return jsonify({'path': path})

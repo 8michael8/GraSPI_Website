@@ -189,17 +189,27 @@ def shortest_path(graph):
     for c in ccp:
         for x in c:
             if graph.vs[x]['color'] == 'black' or graph.vs[x]['color'] == 'green':
-                listOfShortestPaths[x] = graph.get_shortest_paths(greenVertex, x, output="vpath")
+                listOfShortestPaths[x] = graph.get_shortest_paths(greenVertex, x, output="vpath")[0]
 
     return listOfShortestPaths
 
 
 def runIgraph(type):
     file = "./testCases/10x10.txt"
-    g = generateGraph(file)
     output = f'frontend/client/src/graph/igraph{type}.png'
-    visual2D(g, output)
+    g = generateGraph(file)
+
+    if type == "graph":
+        visual2D(g, output)
+        return 0
+    elif type == "filter":
+        fg = filterGraph(g)
+        visual2D(fg, output)
+        return 0
+    elif type == "bfs":
+        fg = filterGraph(g)
+        path = shortest_path(fg)
+        return path
 
     return 0
-
 
