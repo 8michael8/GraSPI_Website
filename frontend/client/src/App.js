@@ -21,9 +21,10 @@ import gt_bfs from './images/gt_bfs.JPG'
 function App() {
     const animation = gsap.timeline();
   useEffect(() => {
-
     window.scrollTo(0, 0);
-        document.body.classList.add('no-scroll');
+      setTimeout(() => {
+    document.body.classList.add('no-scroll');
+  }, 1000);
 
     let path = document.querySelector("path");
     let pathLength = path.getTotalLength();
@@ -182,9 +183,7 @@ const graphCreation = (libraryName, type) => {
     .then(response => response.json())
     .then(data => {
         setLoading(false);
-        console.log(data.path)
         if (typeof data.path === 'object' && !Array.isArray(data.path)) {
-            console.log("AAAAA");
             setPath(data.path);
         } else if (typeof data.image_path === "string") {
             setGeneratedImage(data.image_path);
@@ -442,6 +441,9 @@ algoText: (
             <div>Offers deep insights into material properties</div>
             <div>Low computational overhead</div>
         </div>
+        <div className="mission">
+            <p>Our mission is to identify the best Python-based package from the four options below and translate its functionality into a GraSPI implementation. </p>
+         </div>
 
         {/* Line Container*/}
         <div className="line-container">

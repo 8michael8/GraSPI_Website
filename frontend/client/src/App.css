@@ -67,6 +67,16 @@ body.no-scroll {
     white-space: nowrap;
 }
 
+.homePage .mission {
+    text-align: center;
+    width: 50vw;
+    position: absolute;
+    top: 70%;
+    font-size: 2vw;
+    color: black;
+    left: 25%;
+}
+
 .homePage .graspiDesc div::before {
     color: #555555;
     content: '⬤';
