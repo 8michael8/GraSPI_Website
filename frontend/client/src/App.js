@@ -293,9 +293,27 @@ const downloadPathsAsText = () => {
         img: graphtool,
         text: "Graph-tool is an efficient Python module for manipulation and statistical analysis of graphs (a.k.a. networks). Contrary to most other Python modules with similar functionality, the core data structures and algorithms are implemented in C++, making extensive use of template metaprogramming, based heavily on the Boost Graph Library. This confers it a level of performance that is comparable (both in memory usage and computation time) to that of a pure C/C++ library.",
         header: "graphtool",
-        algoText: "Testing4",
-        filterText: "AAAAAAAA",
-        bfsText: "1111111"
+        algoText: (
+            <ul>
+                <li>Graphs are generated using the graph-tool function.</li>
+                <li>Each number corresponds to a node index.</li>
+                <li>Index 0 represents the bottom connection, and index 1 the top connection.</li>
+                <li>This is a 10x10 structure, with every edge printed.</li>
+            </ul>
+        ),
+        filterText: (
+            <ul>
+                <li>Graph is filtered by GraphView through the in-built graph-tool function.</li>
+                <li>It is supported by two other functions, edge_filter and vertex_filter.</li>
+                <li>These helper functions determine what is being excluded.</li>
+                <li>The GraphView also helps create this filtered graph as an entirely new graph on its own.</li>
+            </ul>
+        ),
+        bfsText: (
+            <ul>
+                <li>This BFS implementation starts at the bottom node, which is represented by 0. Graph-Tool uses an in-built function that uses a helper function called BFSVisitor. This helper function also determines what parameters to set when searching. The image here, represents all the paths from each node starting from node 0. It is doing this search on a filtered graph, so half of the nodes do not have a pathing.</li>
+            </ul>
+        ),
     }
 ];
 
@@ -394,7 +412,7 @@ const downloadPathsAsText = () => {
         {/*/>*/}
                 {/*This is for graph-tool graph creation*/}
                 {popupContent.header === "graphtool" ?
-                    <img src={gt_creation} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:800}}/>
+                    <img src={gt_creation} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:600, left:80}}/>
                     :
                     <img src={popupContent.graphCode} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1}}/>
                 }
@@ -409,7 +427,7 @@ const downloadPathsAsText = () => {
                 <h1 className="popup-h">Filtering</h1>
                 <p className="popup-algo">{popupContent.filterText}</p>
                 {/*This is for graph-tool filtering*/}
-                {popupContent.header === "graphtool" && <img src={gt_filter} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:800}}/>}
+                {popupContent.header === "graphtool" && <img src={gt_filter} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:600, left:80}}/>}
                 <button className="next-button" onClick={() => {
                     setCurrentSlide('bfs'); // Change to graph slide
                     setGeneratedImage(null);  // Reset generated image
@@ -443,7 +461,7 @@ const downloadPathsAsText = () => {
                 <h1 className="popup-h">BFS</h1>
                 <p className="popup-algo">{popupContent.bfsText}</p>
                 {/*This is for graph-tool bfs*/}
-                {popupContent.header === "graphtool" && <img src={gt_bfs} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:800}}/>}
+                {popupContent.header === "graphtool" && <img src={gt_bfs} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:600, left:80}}/>}
                 <button className="next-button" onClick={() => {
                     setCurrentSlide('intro'); // Change to graph slide
                     setGeneratedImage(null);  // Reset generated image
