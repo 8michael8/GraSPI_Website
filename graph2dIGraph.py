@@ -189,7 +189,7 @@ def shortest_path(graph):
     for c in ccp:
         for x in c:
             if graph.vs[x]['color'] == 'black' or graph.vs[x]['color'] == 'green':
-                listOfShortestPaths[x] = graph.get_shortest_paths(greenVertex, x, output="vpath")
+                listOfShortestPaths[x] = graph.get_shortest_paths(greenVertex, x, output="vpath")[0]
 
     return listOfShortestPaths
 
