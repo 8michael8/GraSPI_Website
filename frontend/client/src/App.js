@@ -409,11 +409,7 @@ const downloadPathsAsText = () => {
                 <h1 className="popup-h">Filtering</h1>
                 <p className="popup-algo">{popupContent.filterText}</p>
                 {/*This is for graph-tool filtering*/}
-                {popupContent.header === "graphtool" ?
-                    <img src={gt_filter} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:800}}/>
-                    :
-                    <img src={popupContent.graphCode} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1}}/>
-                }
+                {popupContent.header === "graphtool" && <img src={gt_filter} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:800}}/>}
                 <button className="next-button" onClick={() => {
                     setCurrentSlide('bfs'); // Change to graph slide
                     setGeneratedImage(null);  // Reset generated image
@@ -447,11 +443,7 @@ const downloadPathsAsText = () => {
                 <h1 className="popup-h">BFS</h1>
                 <p className="popup-algo">{popupContent.bfsText}</p>
                 {/*This is for graph-tool bfs*/}
-                {popupContent.header === "graphtool" ?
-                    <img src={gt_bfs} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:800}}/>
-                    :
-                    <img src={popupContent.graphCode} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1}}/>
-                }
+                {popupContent.header === "graphtool" && <img src={gt_bfs} alt="" className="popup-img2" style={{opacity: generatedImage ? 0 : 1, width:800}}/>}
                 <button className="next-button" onClick={() => {
                     setCurrentSlide('intro'); // Change to graph slide
                     setGeneratedImage(null);  // Reset generated image
