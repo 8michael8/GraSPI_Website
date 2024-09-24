@@ -85,6 +85,7 @@ def createGraph(filename):
 
         line_idx = 1
         # Graph creation
+
         for z in range(dimZ):
             for y in range(dimY):
                 line = lines[line_idx].strip().split(" ")
@@ -122,8 +123,9 @@ def createGraph(filename):
                 prevRow, currRow = currRow, [None] * dimX
 
             prevLayer, currLayer = currLayer, [[None] * dimX for i in range(dimY)]
-
     add_cathode_node(dimX, dimY, dimZ)
+    return graph
+
 
 def add_cathode_node(dimX,dimY,dimZ):
     node = graph.add_node(Node("Interface", 2,0,0,0))
@@ -146,11 +148,11 @@ def node_attr_fn(node):
         attr_dict["color"] = "blue"
         attr_dict["fillcolor"] = "blue"
         attr_dict["fontcolor"] = "white"
-    elif node.color == 1:
+    elif node.color == 0:
         attr_dict["color"] = "black"
         attr_dict["fillcolor"] = "black"
         attr_dict["fontcolor"] = "white"
-    else:
+    elif node.color == 1:
         attr_dict["color"] = "black"
         attr_dict["fillcolor"] = "white"
     return attr_dict
@@ -202,7 +204,7 @@ def filterGraph(g, visualize, filteredImageFile):
     return edges
 
 def testFilterGraph(g, filename, visualize,  filteredFileName):
-    createGraph(filename)
+    #createGraph(filename)
     filterGraph(g, visualize, filteredFileName)
 
 #Uses DFS to traverse graph and print's all edges reachable from source node
@@ -238,76 +240,38 @@ def shortest_path_btwn_nodes(g, source, target):
     else:
         print('Shortest Path between', source, 'and', target , path)
 
-
-
-#runs and returns data for time it took to graph, filter, and find the shortest path. Also returns total memory usage for all three functions.
-#runs two times, can possibly be shortened but this is function is simply for documentation and not important for the rest of the code to run.
-def run_all_three_functions(filename):
-    GC_total_time, FG_total_time, SP_total_time = 0,0,0
-
-    start = time.time()
-    testGraphRunTime(filename, False, 1, "image/rustworkx.jpg")
-    GC_total_time += time.time() - start
-
-    start = time.time()
-    testFilterGraph(graph, filename, False, 1, "image/rustworkx_subgraph.jpg")
-    FG_total_time += time.time() - start
-
-    start = time.time()
-    shortest_path_from_cathode(filteredGraph, 4)
-    SP_total_time += time.time() - start
-
-    GC_mem, FG_mem, SP_mem = 0, 0, 0
-
-    tracemalloc.start()
-    testGraphRunTime(filename, False, 1, "image/rustworkx.jpg")
-    stats = tracemalloc.get_traced_memory()
-    tracemalloc.stop()
-    GC_mem = stats[1] - stats[0]
-
-    tracemalloc.start()
-    testFilterGraph(graph, filename, False, 1, "image/rustworkx_subgraph.jpg")
-    stats = tracemalloc.get_traced_memory()
-    tracemalloc.stop()
-    FG_mem = stats[1] - stats[0]
-
-    tracemalloc.start()
-    shortest_path_from_cathode(filteredGraph, 4)
-    stats = tracemalloc.get_traced_memory()
-    tracemalloc.stop()
-    SP_mem = stats[1] - stats[0]
-
-    total_mem = GC_mem + FG_mem + SP_mem
-
-    return GC_total_time, FG_total_time, SP_total_time, total_mem
-
-def run_functions_w_visualization(filename, graphVisualFileName, filteredFileName):
-    testGraphRunTime(filename,True,1, graphVisualFileName)
-    testFilterGraph(graph,filename,True,1, filteredFileName)
-    shortest_path_from_cathode(filteredGraph,4)
+def shortest_path_all_nodes(g):
+    cathode = g.num_nodes() - 1
+    all_paths = dijkstra_shortest_paths(g, cathode)
+    paths = {}
+    for node in all_paths.keys():
+        if g.get_node_data(node).color == 0:
+            paths[node] = list(all_paths[node])
+    return paths
 
 def run_rustworkxKM(type):
     output_file = f"frontend/client/src/graph/rustworkxKM{type}.png"
     print("Generating Graph...")
-    file = file_list[0]
+    file = "./testCases/10x10.txt"
     if type == "graph":
-        testGraphRunTime(file, True, output_file)
+        createGraph(file)
+        visualizeGraphGV(graph, output_file)
         return 0
     elif type == "filtered":
-        testGraphRunTime(file, True, output_file)
-        testFilterGraph(graph, file, True, output_file)
+        createGraph(file)
+        filterGraph(graph, True, output_file)
         return 0
     elif type == "bfs":
-        paths = {}
-        testGraphRunTime(graph, False, output_file)
-        testFilterGraph(graph, file, False, output_file)
-        for node in filteredGraph.nodes():
-            print(node)
+        createGraph(file)
+        filterGraph(graph, False, output_file)
+        paths = shortest_path_all_nodes(graph)
+        return paths
+
 
 
 # Defining main function
 def main():
-    run_rustworkxKM("graph")
+    run_rustworkxKM("bfs")
 
 if __name__=="__main__":
     main()
