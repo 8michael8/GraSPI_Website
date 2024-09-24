@@ -30,6 +30,8 @@ def create_graph(library_name, graph_type):
     elif library_name == "rustworkx":
         if graph_type == 'bfs':
             path = runRust(graph_type)
+        else:
+            runRust(graph_type)
     elif library_name == "rustworkxK":
         if graph_type == 'bfs':
             path = run_rustworkxKM(graph_type)
